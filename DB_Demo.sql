@@ -1614,7 +1614,8 @@ INSERT INTO TBL_Tours (ID_Tour, Nombre, Descripcion, Duracion, Precio) VALUES
 (134, 'Tour4', 'Descripcion del Tour 4', 'Duracion4 horas', 90);
 INSERT INTO TBL_Tours (ID_Tour, Nombre, Descripcion, Duracion, Precio) VALUES 
 (135, 'Tour5', 'Descripcion del Tour 5', 'Duracion5 horas', 105);
-INSERT INTO TBL_Tours (ID_Tour, Nombre, Descripcion, Duracion, Precio) VALUES (136, 'Tour6', 'Descripcion del Tour 6', 'Duracion6 horas', 120);
+INSERT INTO TBL_Tours (ID_Tour, Nombre, Descripcion, Duracion, Precio) VALUES 
+(136, 'Tour6', 'Descripcion del Tour 6', 'Duracion6 horas', 120);
 INSERT INTO TBL_Tours (ID_Tour, Nombre, Descripcion, Duracion, Precio) VALUES 
 (137, 'Tour7', 'Descripcion del Tour 7', 'Duracion7 horas', 135);
 INSERT INTO TBL_Tours (ID_Tour, Nombre, Descripcion, Duracion, Precio) VALUES 
@@ -2167,206 +2168,406 @@ INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email
 INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
 (200, 'EmpleadoNombre10', 'EmpleadoApellido10', 'Cargo10', '123-456-7010', 'empleado10@example.com');
 
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (1, 1, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (2, 2, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (3, 3, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (4, 4, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (5, 5, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (6, 6, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (7, 7, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (8, 8, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (9, 9, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (10, 10, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (11, 11, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (12, 12, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (13, 13, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (14, 14, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (15, 15, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (16, 16, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (17, 17, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (18, 18, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (19, 19, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (20, 20, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (21, 21, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (22, 22, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (23, 23, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (24, 24, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (25, 25, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (26, 26, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (27, 27, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (28, 28, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (29, 29, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (30, 30, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (31, 31, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (32, 32, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (33, 33, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (34, 34, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (35, 35, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (36, 36, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (37, 37, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (38, 38, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (39, 39, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (40, 40, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (41, 41, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (42, 42, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (43, 43, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (44, 44, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (45, 45, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (46, 46, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (47, 47, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (48, 48, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (49, 49, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (50, 50, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (51, 51, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (52, 52, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (53, 53, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (54, 54, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (55, 55, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (56, 56, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (57, 57, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (58, 58, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (59, 59, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (60, 60, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (61, 61, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (62, 62, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (63, 63, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (64, 64, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (65, 65, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (66, 66, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (67, 67, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (68, 68, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (69, 69, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (70, 70, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (71, 71, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (72, 72, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (73, 73, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (74, 74, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (75, 75, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (76, 76, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (77, 77, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (78, 78, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (79, 79, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (80, 80, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (81, 81, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (82, 82, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (83, 83, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (84, 84, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (85, 85, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (86, 86, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (87, 87, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (88, 88, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (89, 89, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (90, 90, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (91, 91, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (92, 92, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (93, 93, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (94, 94, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (95, 95, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (96, 96, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (97, 97, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (98, 98, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (99, 99, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (100, 100, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (101, 101, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (102, 102, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (103, 103, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (104, 104, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (105, 105, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (106, 106, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (107, 107, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (108, 108, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (109, 109, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (110, 110, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (111, 111, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (112, 112, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (113, 113, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (114, 114, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (115, 115, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (116, 116, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (117, 117, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (118, 118, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (119, 119, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (120, 120, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (121, 121, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (122, 122, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (123, 123, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (124, 124, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (125, 125, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (126, 126, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (127, 127, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (128, 128, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (129, 129, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (130, 130, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (131, 131, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (132, 132, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (133, 133, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (134, 134, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (135, 135, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (136, 136, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (137, 137, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (138, 138, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (139, 139, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (140, 140, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (141, 141, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (142, 142, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (143, 143, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (144, 144, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (145, 145, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (146, 146, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (147, 147, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (148, 148, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (149, 149, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (150, 150, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (151, 151, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (152, 152, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (153, 153, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (154, 154, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (155, 155, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (156, 156, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (157, 157, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (158, 158, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (159, 159, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (160, 160, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (161, 161, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (162, 162, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (163, 163, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (164, 164, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (165, 165, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (166, 166, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (167, 167, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (168, 168, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (169, 169, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (170, 170, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (171, 171, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (172, 172, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (173, 173, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (174, 174, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (175, 175, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (176, 176, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (177, 177, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (178, 178, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (179, 179, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (180, 180, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (181, 181, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (182, 182, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (183, 183, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (184, 184, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (185, 185, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (186, 186, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (187, 187, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (188, 188, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (189, 189, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (190, 190, 1, 1);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (191, 191, 2, 2);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (192, 192, 3, 3);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (193, 193, 4, 4);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (194, 194, 5, 5);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (195, 195, 6, 6);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (196, 196, 7, 7);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (197, 197, 8, 8);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (198, 198, 9, 9);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (199, 199, 10, 10);
-INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (200, 200, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(1, 1, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(2, 2, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(3, 3, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(4, 4, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(5, 5, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(6, 6, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(7, 7, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(8, 8, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(9, 9, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(10, 10, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(11, 11, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(12, 12, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(13, 13, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(14, 14, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(15, 15, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(16, 16, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(17, 17, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(18, 18, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(19, 19, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(20, 20, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(21, 21, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(22, 22, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(23, 23, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(24, 24, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(25, 25, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(26, 26, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(27, 27, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(28, 28, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(29, 29, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(30, 30, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(31, 31, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(32, 32, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(33, 33, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(34, 34, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(35, 35, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(36, 36, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(37, 37, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(38, 38, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(39, 39, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(40, 40, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(41, 41, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(42, 42, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(43, 43, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(44, 44, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(45, 45, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(46, 46, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(47, 47, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(48, 48, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(49, 49, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(50, 50, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(51, 51, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(52, 52, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(53, 53, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(54, 54, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(55, 55, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(56, 56, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(57, 57, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(58, 58, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(59, 59, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(60, 60, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(61, 61, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(62, 62, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(63, 63, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(64, 64, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(65, 65, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(66, 66, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(67, 67, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(68, 68, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(69, 69, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(70, 70, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(71, 71, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(72, 72, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(73, 73, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(74, 74, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(75, 75, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(76, 76, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(77, 77, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(78, 78, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(79, 79, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(80, 80, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(81, 81, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(82, 82, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(83, 83, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(84, 84, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(85, 85, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(86, 86, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(87, 87, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(88, 88, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(89, 89, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(90, 90, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(91, 91, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(92, 92, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(93, 93, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(94, 94, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(95, 95, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(96, 96, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(97, 97, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(98, 98, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(99, 99, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(100, 100, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(101, 101, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(102, 102, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(103, 103, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(104, 104, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(105, 105, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(106, 106, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(107, 107, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(108, 108, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(109, 109, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(110, 110, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(111, 111, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(112, 112, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(113, 113, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(114, 114, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(115, 115, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(116, 116, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(117, 117, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(118, 118, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(119, 119, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(120, 120, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(121, 121, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(122, 122, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(123, 123, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(124, 124, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(125, 125, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(126, 126, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(127, 127, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(128, 128, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(129, 129, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(130, 130, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(131, 131, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(132, 132, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(133, 133, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(134, 134, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(135, 135, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(136, 136, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(137, 137, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(138, 138, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(139, 139, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(140, 140, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(141, 141, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(142, 142, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(143, 143, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(144, 144, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(145, 145, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(146, 146, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(147, 147, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(148, 148, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(149, 149, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(150, 150, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(151, 151, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(152, 152, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(153, 153, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(154, 154, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(155, 155, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(156, 156, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(157, 157, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(158, 158, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(159, 159, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(160, 160, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(161, 161, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(162, 162, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(163, 163, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(164, 164, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(165, 165, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(166, 166, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(167, 167, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(168, 168, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(169, 169, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(170, 170, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(171, 171, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(172, 172, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(173, 173, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(174, 174, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(175, 175, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(176, 176, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(177, 177, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(178, 178, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(179, 179, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(180, 180, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(181, 181, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(182, 182, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(183, 183, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(184, 184, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(185, 185, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(186, 186, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(187, 187, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(188, 188, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(189, 189, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(190, 190, 1, 1);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(191, 191, 2, 2);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(192, 192, 3, 3);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(193, 193, 4, 4);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(194, 194, 5, 5);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(195, 195, 6, 6);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(196, 196, 7, 7);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(197, 197, 8, 8);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(198, 198, 9, 9);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(199, 199, 10, 10);
+INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+(200, 200, 1, 1);
 
 INSERT INTO TBL_Pagos (ID_Pago, Monto, Fecha_Pago, Metodo_Pago) VALUES 
 (1, 52, TO_DATE('2024-12-01', 'YYYY-MM-DD') + 1, 'Metodo2');
