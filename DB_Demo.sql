@@ -3882,6 +3882,189 @@ BEGIN
 END;
 /
 
+CREATE OR REPLACE VIEW VW_Clientes 
+AS
+SELECT 
+    ID_Cliente,
+    Nombre,
+    Apellido,
+    Email,
+    Telefono,
+    Direccion
+FROM TBL_Clientes;
+/
+
+CREATE OR REPLACE VIEW VW_Reservas 
+AS
+SELECT 
+    ID_Reserva,
+    ID_Cliente,
+    ID_Vuelo,
+    ID_Hotel
+FROM TBL_Reservas;
+/
+
+CREATE OR REPLACE VIEW VW_Vuelos 
+AS
+SELECT 
+    ID_Vuelo,
+    Aerolinea,
+    Origen,
+    Destino,
+    Fecha_Salida,
+    Fecha_Llegada,
+    Precio
+FROM TBL_Vuelos;
+/
+
+CREATE OR REPLACE VIEW VW_Hoteles 
+AS
+SELECT 
+    ID_Hotel,
+    Nombre,
+    Ubicacion,
+    Categoria,
+    Precio_Noche
+FROM TBL_Hoteles;
+/
+
+CREATE OR REPLACE VIEW VW_Pagos 
+AS
+SELECT 
+    ID_Pago,
+    Monto,
+    Fecha_Pago,
+    Metodo_Pago
+FROM TBL_Pagos;
+/
+
+CREATE OR REPLACE VIEW VW_Tours 
+AS
+SELECT 
+    ID_Tour,
+    Nombre,
+    Descripcion,
+    Duracion,
+    Precio
+FROM TBL_Tours;
+/
+
+CREATE OR REPLACE VIEW VW_Reservas_Tours 
+AS
+SELECT 
+    ID_Reserva_Tour,
+    ID_Reserva,
+    ID_Tour
+FROM TBL_Reservas_Tours;
+/
+
+CREATE OR REPLACE VIEW VW_Empleados 
+AS
+SELECT 
+    ID_Empleado,
+    Nombre,
+    Apellido,
+    Cargo,
+    Telefono,
+    Email
+FROM TBL_Empleados;
+/
+
+SELECT * 
+FROM VW_Clientes;
+
+SELECT * 
+FROM VW_Clientes
+WHERE Nombre = 'Juan';
+
+SELECT * 
+FROM VW_Reservas;
+
+SELECT * 
+FROM VW_Reservas
+WHERE ID_Cliente = 1;
+
+SELECT * 
+FROM VW_Vuelos;
+
+SELECT * 
+FROM VW_Vuelos
+WHERE Destino = 'Nueva York';
+
+SELECT * 
+FROM VW_Vuelos
+WHERE Precio 
+BETWEEN 100 AND 500;
+
+SELECT * 
+FROM VW_Hoteles;
+
+SELECT * 
+FROM VW_Hoteles
+WHERE Categoria = '5 Estrellas';
+
+SELECT * 
+FROM VW_Pagos;
+
+SELECT * 
+FROM VW_Pagos
+WHERE Metodo_Pago = 'Tarjeta de Crédito';
+
+SELECT * 
+FROM VW_Tours;
+
+SELECT * 
+FROM VW_Tours
+WHERE Precio < 200;
+
+SELECT * 
+FROM VW_Reservas_Tours;
+
+SELECT * 
+FROM VW_Reservas_Tours
+WHERE ID_Tour = 5;
+
+SELECT * 
+FROM VW_Empleados;
+
+SELECT * 
+FROM VW_Empleados
+WHERE Cargo = 'Gerente';
+
+SELECT 
+    R.ID_Reserva, 
+    C.Nombre AS Cliente, 
+    V.Aerolinea, 
+    V.Destino
+FROM VW_Reservas R
+JOIN VW_Clientes C 
+ON R.ID_Cliente = C.ID_Cliente
+JOIN VW_Vuelos V 
+ON R.ID_Vuelo = V.ID_Vuelo;
+
+SELECT 
+    P.ID_Pago, 
+    C.Nombre AS Cliente, 
+    P.Monto, 
+    P.Metodo_Pago
+FROM VW_Pagos P
+JOIN VW_Reservas R 
+ON P.ID_Reserva = R.ID_Reserva
+JOIN VW_Clientes C 
+ON R.ID_Cliente = C.ID_Cliente;
+
+SELECT 
+    C.Nombre AS Cliente, 
+    T.Nombre AS Tour, 
+    T.Precio
+FROM VW_Reservas_Tours RT
+JOIN VW_Reservas R 
+ON RT.ID_Reserva = R.ID_Reserva
+JOIN VW_Clientes C 
+ON R.ID_Cliente = C.ID_Cliente
+JOIN VW_Tours T
+ON RT.ID_Tour = T.ID_Tour;
+
 CREATE OR REPLACE PROCEDURE SP_Update_Vuelo 
 (
     p_ID_Vuelo IN INT,
