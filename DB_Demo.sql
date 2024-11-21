@@ -67,7 +67,7 @@ CREATE TABLE TBL_Hoteles
 
 CREATE TABLE TBL_Pagos 
 (
-	ID_Pago INT PRIMARY KEY
+	ID_Pago INT PRIMARY KEY,
 	Monto NUMBER,
 	Fecha_Pago DATE,
 	Metodo_Pago VARCHAR2(20) NOT NULL
@@ -158,7 +158,7 @@ INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direcci
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) VALUES 
 (18, 'Nombre18', 'Apellido18', 'cliente18@example.com', '123-456-7818', 'Direccion 18');
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) VALUES 
-19, 'Nombre19', 'Apellido19', 'cliente19@example.com', '123-456-7819', 'Direccion 19');
+(19, 'Nombre19', 'Apellido19', 'cliente19@example.com', '123-456-7819', 'Direccion 19');
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) VALUES 
 (20, 'Nombre20', 'Apellido20', 'cliente20@example.com', '123-456-7820', 'Direccion 20');
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) VALUES 
@@ -3772,3 +3772,372 @@ INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email
 (199, 'David', 'Sánchez', 'Marketing', '123-456-7898', 'david.sanchez@empresa.com');
 INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
 (200, 'Elena', 'Morales', 'Ventas', '123-456-7899', 'elena.morales@empresa.com');
+
+CREATE OR REPLACE PROCEDURE SP_Insert_Cliente 
+(
+    p_ID_Cliente IN INT,
+    p_Nombre IN VARCHAR2,
+    p_Apellido IN VARCHAR2,
+    p_Email IN VARCHAR2,
+    p_Telefono IN VARCHAR2,
+    p_Direccion IN VARCHAR2
+) 
+AS
+BEGIN
+    INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) VALUES 
+	(p_ID_Cliente, p_Nombre, p_Apellido, p_Email, p_Telefono, p_Direccion);
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Update_Cliente 
+(
+    p_ID_Cliente IN INT,
+    p_Nombre IN VARCHAR2,
+    p_Apellido IN VARCHAR2,
+    p_Email IN VARCHAR2,
+    p_Telefono IN VARCHAR2,
+    p_Direccion IN VARCHAR2
+) 
+AS
+BEGIN
+    UPDATE TBL_Clientes
+    SET 
+	Nombre = p_Nombre,
+    Apellido = p_Apellido,
+    Email = p_Email,
+    Telefono = p_Telefono,
+    Direccion = p_Direccion
+    WHERE ID_Cliente = p_ID_Cliente;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Delete_Cliente 
+(
+    p_ID_Cliente IN INT
+) 
+AS
+BEGIN
+    DELETE FROM TBL_Clientes
+    WHERE ID_Cliente = p_ID_Cliente;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Insert_Reserva 
+(
+    p_ID_Reserva IN INT,
+    p_ID_Cliente IN INT,
+    p_ID_Vuelo IN INT,
+    p_ID_Hotel IN INT
+) 
+AS
+BEGIN
+    INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
+	(p_ID_Reserva, p_ID_Cliente, p_ID_Vuelo, p_ID_Hotel);
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Update_Reserva 
+(
+    p_ID_Reserva IN INT,
+    p_ID_Cliente IN INT,
+    p_ID_Vuelo IN INT,
+    p_ID_Hotel IN INT
+) 
+AS
+BEGIN
+    UPDATE TBL_Reservas
+    SET 
+	ID_Cliente = p_ID_Cliente,
+    ID_Vuelo = p_ID_Vuelo,
+    ID_Hotel = p_ID_Hotel
+    WHERE ID_Reserva = p_ID_Reserva;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Delete_Reserva 
+(
+    p_ID_Reserva IN INT
+) 
+AS
+BEGIN
+    DELETE FROM TBL_Reservas
+    WHERE ID_Reserva = p_ID_Reserva;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Insert_Vuelo 
+(
+    p_ID_Vuelo IN INT,
+    p_Aerolinea IN VARCHAR2,
+    p_Origen IN VARCHAR2,
+    p_Destino IN VARCHAR2,
+    p_Fecha_Salida IN DATE,
+    p_Fecha_Llegada IN DATE,
+    p_Precio IN NUMBER
+) 
+AS
+BEGIN
+    INSERT INTO TBL_Vuelos (ID_Vuelo, Aerolinea, Origen, Destino, Fecha_Salida, Fecha_Llegada, Precio) VALUES 
+	(p_ID_Vuelo, p_Aerolinea, p_Origen, p_Destino, p_Fecha_Salida, p_Fecha_Llegada, p_Precio);
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Update_Vuelo 
+(
+    p_ID_Vuelo IN INT,
+    p_Aerolinea IN VARCHAR2,
+    p_Origen IN VARCHAR2,
+    p_Destino IN VARCHAR2,
+    p_Fecha_Salida IN DATE,
+    p_Fecha_Llegada IN DATE,
+    p_Precio IN NUMBER
+) 
+AS
+BEGIN
+    UPDATE TBL_Vuelos
+    SET 
+	Aerolinea = p_Aerolinea,
+    Origen = p_Origen,
+    Destino = p_Destino,
+    Fecha_Salida = p_Fecha_Salida,
+    Fecha_Llegada = p_Fecha_Llegada,
+    Precio = p_Precio
+    WHERE ID_Vuelo = p_ID_Vuelo;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Delete_Vuelo 
+(
+    p_ID_Vuelo IN INT
+) 
+AS
+BEGIN
+    DELETE FROM TBL_Vuelos
+    WHERE ID_Vuelo = p_ID_Vuelo;
+END;
+/
+
+
+CREATE OR REPLACE PROCEDURE SP_Insert_Hotel 
+(
+    p_ID_Hotel IN INT,
+    p_Nombre IN VARCHAR2,
+    p_Ubicacion IN VARCHAR2,
+    p_Categoria IN VARCHAR2,
+    p_Precio_Noche IN NUMBER
+) 
+AS
+BEGIN
+    INSERT INTO TBL_Hoteles (ID_Hotel, Nombre, Ubicacion, Categoria, Precio_Noche) VALUES 
+	(p_ID_Hotel, p_Nombre, p_Ubicacion, p_Categoria, p_Precio_Noche);
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Update_Hotel 
+(
+    p_ID_Hotel IN INT,
+    p_Nombre IN VARCHAR2,
+    p_Ubicacion IN VARCHAR2,
+    p_Categoria IN VARCHAR2,
+    p_Precio_Noche IN NUMBER
+) 
+AS
+BEGIN
+    UPDATE TBL_Hoteles
+    SET 
+	Nombre = p_Nombre,
+    Ubicacion = p_Ubicacion,
+    Categoria = p_Categoria,
+    Precio_Noche = p_Precio_Noche
+    WHERE ID_Hotel = p_ID_Hotel;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Delete_Hotel 
+(
+    p_ID_Hotel IN INT
+) 
+AS
+BEGIN
+    DELETE FROM TBL_Hoteles
+    WHERE ID_Hotel = p_ID_Hotel;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Insert_Pago 
+(
+    p_ID_Pago IN INT,
+    p_Monto IN NUMBER,
+    p_Fecha_Pago IN DATE,
+    p_Metodo_Pago IN VARCHAR2
+) 
+AS
+BEGIN
+    INSERT INTO TBL_Pagos (ID_Pago, Monto, Fecha_Pago, Metodo_Pago) VALUES 
+	(p_ID_Pago, p_Monto, p_Fecha_Pago, p_Metodo_Pago);
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Update_Pago 
+(
+    p_ID_Pago IN INT,
+    p_Monto IN NUMBER,
+    p_Fecha_Pago IN DATE,
+    p_Metodo_Pago IN VARCHAR2
+) 
+AS
+BEGIN
+    UPDATE TBL_Pagos
+    SET 
+	Monto = p_Monto,
+    Fecha_Pago = p_Fecha_Pago,
+    Metodo_Pago = p_Metodo_Pago
+    WHERE ID_Pago = p_ID_Pago;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Delete_Pago 
+(
+    p_ID_Pago IN INT
+) 
+AS
+BEGIN
+    DELETE FROM TBL_Pagos
+    WHERE ID_Pago = p_ID_Pago;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Insert_Tour 
+(
+    p_ID_Tour IN INT,
+    p_Nombre IN VARCHAR2,
+    p_Descripcion IN VARCHAR2,
+    p_Duracion IN VARCHAR2,
+    p_Precio IN NUMBER
+) 
+AS
+BEGIN
+    INSERT INTO TBL_Tours (ID_Tour, Nombre, Descripcion, Duracion, Precio) VALUES 
+	(p_ID_Tour, p_Nombre, p_Descripcion, p_Duracion, p_Precio);
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Update_Tour 
+(
+    p_ID_Tour IN INT,
+    p_Nombre IN VARCHAR2,
+    p_Descripcion IN VARCHAR2,
+    p_Duracion IN VARCHAR2,
+    p_Precio IN NUMBER
+) 
+AS
+BEGIN
+    UPDATE TBL_Tours
+    SET 
+	Nombre = p_Nombre,
+    Descripcion = p_Descripcion,
+    Duracion = p_Duracion,
+    Precio = p_Precio
+    WHERE ID_Tour = p_ID_Tour;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Delete_Tour 
+(
+    p_ID_Tour IN INT
+) 
+AS
+BEGIN
+    DELETE FROM TBL_Tours
+    WHERE ID_Tour = p_ID_Tour;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Insert_Reserva_Tour 
+(
+    p_ID_Reserva_Tour IN INT,
+    p_ID_Reserva IN INT,
+    p_ID_Tour IN INT
+) 
+AS
+BEGIN
+    INSERT INTO TBL_Reservas_Tours (ID_Reserva_Tour, ID_Reserva, ID_Tour) VALUES 
+	(p_ID_Reserva_Tour, p_ID_Reserva, p_ID_Tour);
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Update_Reserva_Tour 
+(
+    p_ID_Reserva_Tour IN INT,
+    p_ID_Reserva IN INT,
+    p_ID_Tour IN INT
+) 
+AS
+BEGIN
+    UPDATE TBL_Reservas_Tours
+    SET 
+	ID_Reserva = p_ID_Reserva,
+    ID_Tour = p_ID_Tour
+    WHERE ID_Reserva_Tour = p_ID_Reserva_Tour;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Delete_Reserva_Tour 
+(
+    p_ID_Reserva_Tour IN INT
+) 
+AS
+BEGIN
+    DELETE FROM TBL_Reservas_Tours
+    WHERE ID_Reserva_Tour = p_ID_Reserva_Tour;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Insert_Empleado 
+(
+    p_ID_Empleado IN INT,
+    p_Nombre IN VARCHAR2,
+    p_Apellido IN VARCHAR2,
+    p_Cargo IN VARCHAR2,
+    p_Telefono IN VARCHAR2,
+    p_Email IN VARCHAR2
+) 
+AS
+BEGIN
+    INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
+	(p_ID_Empleado, p_Nombre, p_Apellido, p_Cargo, p_Telefono, p_Email);
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Update_Empleado 
+(
+    p_ID_Empleado IN INT,
+    p_Nombre IN VARCHAR2,
+    p_Apellido IN VARCHAR2,
+    p_Cargo IN VARCHAR2,
+    p_Telefono IN VARCHAR2,
+    p_Email IN VARCHAR2
+) 
+AS
+BEGIN
+    UPDATE TBL_Empleados
+    SET 
+	Nombre = p_Nombre,
+    Apellido = p_Apellido,
+    Cargo = p_Cargo,
+    Telefono = p_Telefono,
+    Email = p_Email
+    WHERE ID_Empleado = p_ID_Empleado;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE SP_Delete_Empleado 
+(
+    p_ID_Empleado IN INT
+) 
+AS
+BEGIN
+    DELETE FROM TBL_Empleados
+    WHERE ID_Empleado = p_ID_Empleado;
+END;
+/
