@@ -4324,3 +4324,103 @@ BEGIN
     WHERE ID_Empleado = p_ID_Empleado;
 END;
 /
+
+CREATE OR REPLACE TRIGGER TRG_Clientes_Insert
+AFTER INSERT ON TBL_Clientes
+FOR EACH ROW
+BEGIN
+    INSERT INTO TBL_Historial (Tabla, Operacion, Fecha, Detalle)
+    VALUES 
+	('TBL_Clientes', 'INSERT', SYSDATE, 'Cliente creado: ' || :NEW.Nombre || ' ' || :NEW.Apellido);
+END;
+/
+
+CREATE OR REPLACE TRIGGER TRG_Reservas_Update
+AFTER UPDATE ON TBL_Reservas
+FOR EACH ROW
+BEGIN
+    INSERT INTO TBL_Historial (Tabla, Operacion, Fecha, Detalle)
+    VALUES 
+	('TBL_Reservas', 'UPDATE', SYSDATE, 'Reserva modificada. ID Reserva: ' || :NEW.ID_Reserva);
+END;
+/
+
+CREATE OR REPLACE TRIGGER TRG_Vuelos_Delete
+BEFORE DELETE ON TBL_Vuelos
+FOR EACH ROW
+DECLARE
+    v_Reservas INT;
+BEGIN
+    SELECT COUNT(*) INTO v_Reservas
+    FROM TBL_Reservas
+    WHERE ID_Vuelo = :OLD.ID_Vuelo;
+    
+    IF v_Reservas > 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'No se puede eliminar el vuelo porque tiene reservas asociadas.');
+    END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER TRG_Hoteles_Delete
+AFTER DELETE ON TBL_Hoteles
+FOR EACH ROW
+BEGIN
+    INSERT INTO TBL_Historial (Tabla, Operacion, Fecha, Detalle)
+    VALUES ('TBL_Hoteles', 'DELETE', SYSDATE, 'Hotel eliminado: ' || :OLD.Nombre || ', Ubicación: ' || :OLD.Ubicacion);
+END;
+/
+
+CREATE OR REPLACE TRIGGER TRG_Pagos_Insert
+AFTER INSERT ON TBL_Pagos
+FOR EACH ROW
+BEGIN
+    UPDATE TBL_Reservas
+    SET Total_Pagos = Total_Pagos + :NEW.Monto
+    WHERE ID_Reserva = :NEW.ID_Reserva;
+END;
+/
+
+CREATE OR REPLACE TRIGGER TRG_Tours_Update
+BEFORE UPDATE ON TBL_Tours
+FOR EACH ROW
+BEGIN
+    IF :NEW.Precio < 0 THEN
+        RAISE_APPLICATION_ERROR(-20002, 'El precio de un tour no puede ser negativo.');
+    END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER TRG_Reservas_Tours_Insert
+AFTER INSERT ON TBL_Reservas_Tours
+FOR EACH ROW
+BEGIN
+    INSERT INTO TBL_Historial (Tabla, Operacion, Fecha, Detalle)
+    VALUES ('TBL_Reservas_Tours', 'INSERT', SYSDATE, 'Reserva asociada al tour. ID Reserva: ' || :NEW.ID_Reserva || ', ID Tour: ' || :NEW.ID_Tour);
+END;
+/
+
+CREATE OR REPLACE TRIGGER TRG_Empleados_Delete
+BEFORE DELETE ON TBL_Empleados
+FOR EACH ROW
+DECLARE
+    v_Tareas INT;
+BEGIN
+    SELECT COUNT(*) INTO v_Tareas
+    FROM TBL_Tareas
+    WHERE ID_Empleado = :OLD.ID_Empleado;
+    
+    IF v_Tareas > 0 THEN
+        RAISE_APPLICATION_ERROR(-20003, 'No se puede eliminar el empleado porque tiene tareas asignadas.');
+    END IF;
+END;
+/
+
+CREATE TABLE TBL_Auditoria (
+    ID_Auditoria INT PRIMARY KEY,
+    Tabla VARCHAR2(50),
+    Operacion VARCHAR2(50),
+    Fecha DATE,
+    Detalle VARCHAR2(500)
+);
+
+SELECT * FROM TBL_Auditoria;
