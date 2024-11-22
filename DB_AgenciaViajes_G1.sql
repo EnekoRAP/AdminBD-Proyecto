@@ -1,12 +1,12 @@
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Crear un usuario
-/*CREATE USER Admin_Agent IDENTIFIED BY agent1234;*/
+CREATE USER Admin_Agent IDENTIFIED BY agent1234;
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Conceder privilegios al usuario
-/*GRANT CONNECT, RESOURCE, DBA TO Admin_Agent;
+GRANT CONNECT, RESOURCE, DBA TO Admin_Agent;
 GRANT CREATE SESSION TO Admin_Agent;
 GRANT CREATE TABLE TO Admin_Agent;
 GRANT CREATE ANY TABLE TO Admin_Agent;
@@ -19,34 +19,34 @@ GRANT ALTER ANY TABLE TO Admin_Agent;
 GRANT EXECUTE ANY PROCEDURE TO Admin_Agent;
 GRANT CREATE ANY PROCEDURE TO Admin_Agent;
 GRANT DROP ANY PROCEDURE TO Admin_Agent;
-GRANT ALTER ANY PROCEDURE TO Admin_Agent;*/
+GRANT ALTER ANY PROCEDURE TO Admin_Agent;
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Creación de tablespace
-/*CREATE TABLESPACE agencia_viajes
+CREATE TABLESPACE agencia_viajes
 DATAFILE 'C:\oracle\oradata\ORCL\agencia_viajes.dbf' SIZE 100M
-AUTOEXTEND ON NEXT 50M MAXSIZE 500M;*/
+AUTOEXTEND ON NEXT 50M MAXSIZE 500M;
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Aignar tablespace por defecto
-/*ALTER USER Admin_Agent DEFAULT TABLESPACE agencia_viajes;*/
+ALTER USER Admin_Agent DEFAULT TABLESPACE agencia_viajes;
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Asignar tablespace temporal
-/*ALTER USER Admin_Agent DEFAULT TABLESPACE temp_agencia;*/
+ALTER USER Admin_Agent DEFAULT TABLESPACE temp_agencia;
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Conectar nuevo usuario
-/*CONNECT Admin_Agent/agent1234;*/
+CONNECT Admin_Agent/agent1234;
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Tabla: CLIENTES
-/*CREATE TABLE TBL_Clientes 
+CREATE TABLE TBL_Clientes 
 (
 	ID_Cliente INT PRIMARY KEY,
 	Nombre VARCHAR2(50) NOT NULL,
@@ -147,12 +147,11 @@ ALTER TABLE TBL_Reservas_Tours
 		REFERENCES TBL_Reservas (ID_Reserva),
 	ADD CONSTRAINT ID_Tour_FK
 		FOREIGN KEY (ID_Tour)
-		REFERENCES TBL_Tours (ID_Tour);*/
+		REFERENCES TBL_Tours (ID_Tour);
 		
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Inserción de datos en la tabla: CLIENTES
-/*
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) VALUES 
 (1, 'Nombre1', 'Apellido1', 'cliente1@example.com', '123-456-7801', 'Direccion 1');
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) VALUES 
@@ -3813,6 +3812,6 @@ INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email
 INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
 (199, 'David', 'Sánchez', 'Marketing', '123-456-7898', 'david.sanchez@empresa.com');
 INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
-(200, 'Elena', 'Morales', 'Ventas', '123-456-7899', 'elena.morales@empresa.com');*/
+(200, 'Elena', 'Morales', 'Ventas', '123-456-7899', 'elena.morales@empresa.com');
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
