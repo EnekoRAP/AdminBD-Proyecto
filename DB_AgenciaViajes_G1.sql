@@ -1,36 +1,52 @@
-CREATE USER Admin_Agent IDENTIFIED BY agent1234;
+--------------------------------------------------------
 
-GRANT CONNECT, RESOURCE, DBA TO Admin_Agent;
+-- Crear un usuario
+/*CREATE USER Admin_Agent IDENTIFIED BY agent1234;*/
 
+--------------------------------------------------------
+
+-- Conceder privilegios al usuario
+/*GRANT CONNECT, RESOURCE, DBA TO Admin_Agent;
 GRANT CREATE SESSION TO Admin_Agent;
-
 GRANT CREATE TABLE TO Admin_Agent;
-
 GRANT CREATE ANY TABLE TO Admin_Agent;
-
 GRANT SELECT ANY TABLE TO Admin_Agent;
-
 GRANT INSERT ANY TABLE TO Admin_Agent;
-
 GRANT UPDATE ANY TABLE TO Admin_Agent;
-
 GRANT DELETE ANY TABLE TO Admin_Agent;
-
 GRANT DROP ANY TABLE TO Admin_Agent;
-
 GRANT ALTER ANY TABLE TO Admin_Agent;
-
 GRANT EXECUTE ANY PROCEDURE TO Admin_Agent;
-
 GRANT CREATE ANY PROCEDURE TO Admin_Agent;
-
 GRANT DROP ANY PROCEDURE TO Admin_Agent;
+GRANT ALTER ANY PROCEDURE TO Admin_Agent;*/
 
-GRANT ALTER ANY PROCEDURE TO Admin_Agent;
+--------------------------------------------------------
 
-ALTER USER Admin_Agent DEFAULT TABLESPACE users QUOTA UNLIMITED ON users;
+-- Creación de tablespace
+/*CREATE TABLESPACE agencia_viajes
+DATAFILE 'C:\oracle\oradata\ORCL\agencia_viajes.dbf' SIZE 100M
+AUTOEXTEND ON NEXT 50M MAXSIZE 500M;*/
 
-CREATE TABLE TBL_Clientes 
+--------------------------------------------------------
+
+-- Aignar tablespace por defecto
+/*ALTER USER Admin_Agent DEFAULT TABLESPACE agencia_viajes;*/
+
+--------------------------------------------------------
+
+-- Asignar tablespace temporal
+/*ALTER USER Admin_Agent DEFAULT TABLESPACE temp_agencia;*/
+
+--------------------------------------------------------
+
+-- Conectar nuevo usuario
+/*CONNECT Admin_Agent/agent1234;*/
+
+--------------------------------------------------------
+
+-- Tabla: CLIENTES
+/*CREATE TABLE TBL_Clientes 
 (
 	ID_Cliente INT PRIMARY KEY,
 	Nombre VARCHAR2(50) NOT NULL,
@@ -40,11 +56,13 @@ CREATE TABLE TBL_Clientes
 	Direccion VARCHAR2(100) NOT NULL
 );
 
+-- Tabla: RESERVAS
 CREATE TABLE TBL_Reservas 
 (
 	ID_Reserva INT PRIMARY KEY
 );
 
+-- Tabla: VUELOS
 CREATE TABLE TBL_Vuelos 
 (
 	ID_Vuelo INT PRIMARY KEY,
@@ -56,6 +74,7 @@ CREATE TABLE TBL_Vuelos
 	Precio NUMBER
 );
 
+-- Tabla: HOTELES
 CREATE TABLE TBL_Hoteles 
 (
 	ID_Hotel INT PRIMARY KEY,
@@ -65,6 +84,7 @@ CREATE TABLE TBL_Hoteles
 	Precio_Noche NUMBER
 );
 
+-- Tabla: PAGOS
 CREATE TABLE TBL_Pagos 
 (
 	ID_Pago INT PRIMARY KEY,
@@ -73,6 +93,7 @@ CREATE TABLE TBL_Pagos
 	Metodo_Pago VARCHAR2(20) NOT NULL
 );
 
+-- Tabla: TOURS
 CREATE TABLE TBL_Tours
 (
 	ID_Tour INT PRIMARY KEY,
@@ -82,11 +103,13 @@ CREATE TABLE TBL_Tours
 	Precio NUMBER
 );
 
+-- Tabla: RESERVAS/TOURS
 CREATE TABLE TBL_Reservas_Tours 
 (
 	ID_Reserva_Tour PRIMARY KEY
 );
 
+-- Tabla: EMPLEADOS
 CREATE TABLE TBL_Empleados
 (
 	ID_Empleado INT PRIMARY KEY,
@@ -97,6 +120,9 @@ CREATE TABLE TBL_Empleados
 	Email VARCHAR2(100) NOT NULL
 );
 
+--------------------------------------------------------
+
+-- Agregar llaves foráneas a RESERVAS
 ALTER TABLE TBL_Reservas
 	ADD CONSTRAINT ID_Cliente_FK
 		FOREIGN KEY (ID_Cliente)
@@ -107,20 +133,26 @@ ALTER TABLE TBL_Reservas
 	ADD CONSTRAINT ID_Hotel_FK
 		FOREIGN KEY (ID_Hotel)
 		REFERENCES TBL_Hoteles (ID_Hotel);
-		
+
+-- Agregar llaves foráneas a PAGOS		
 ALTER TABLE TBL_Pagos
 	ADD CONSTRAINT ID_Reserva_FK
 		FOREIGN KEY (ID_Reserva)
 		REFERENCES TBL_Reservas (ID_Reserva);
-		
+
+-- Agregar llaves foráneas a RESERVAS/TOURS
 ALTER TABLE TBL_Reservas_Tours
 	ADD CONSTRAINT ID_Reserva_FK
 		FOREIGN KEY (ID_Reserva)
 		REFERENCES TBL_Reservas (ID_Reserva),
 	ADD CONSTRAINT ID_Tour_FK
 		FOREIGN KEY (ID_Tour)
-		REFERENCES TBL_Tours (ID_Tour);
+		REFERENCES TBL_Tours (ID_Tour);*/
+		
+--------------------------------------------------------
 
+-- Inserción de datos en la tabla: CLIENTES
+/*
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) VALUES 
 (1, 'Nombre1', 'Apellido1', 'cliente1@example.com', '123-456-7801', 'Direccion 1');
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) VALUES 
@@ -522,6 +554,7 @@ INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direcci
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) VALUES 
 (200, 'Nombre200', 'Apellido200', 'cliente200@example.com', '123-456-8000', 'Direccion 200');
 
+-- Inserción de datos en la tabla: VUELOS
 INSERT INTO TBL_Vuelos (ID_Vuelo, Aerolinea, Origen, Destino, Fecha_Salida, Fecha_Llegada, Precio) VALUES 
 (1, 'Aerolinea1', 'Origen1', 'Destino1', TO_DATE('2024-12-01', 'YYYY-MM-DD') + 1, TO_DATE('2024-12-02', 'YYYY-MM-DD') + 1, 110);
 INSERT INTO TBL_Vuelos (ID_Vuelo, Aerolinea, Origen, Destino, Fecha_Salida, Fecha_Llegada, Precio) VALUES (
@@ -943,6 +976,8 @@ INSERT INTO TBL_Vuelos (ID_Vuelo, Aerolinea, Origen, Destino, Fecha_Salida, Fech
 INSERT INTO TBL_Vuelos (ID_Vuelo, Aerolinea, Origen, Destino, Fecha_Salida, Fecha_Llegada, Precio) VALUES 
 (200, 'Aerolinea10', 'Origen10', 'Destino10', TO_DATE('2024-12-01', 'YYYY-MM-DD') + 10, TO_DATE('2024-12-02', 'YYYY-MM-DD') + 10, 200);
 
+-- Inserción de datos en la tabla: HOTELES
+
 INSERT INTO TBL_Hoteles (ID_Hotel, Nombre, Ubicacion, Categoria, Precio_Noche) VALUES 
 (1, 'Hotel1', 'Ubicacion1', 'Categoria1', 55);
 INSERT INTO TBL_Hoteles (ID_Hotel, Nombre, Ubicacion, Categoria, Precio_Noche) VALUES 
@@ -1343,6 +1378,8 @@ INSERT INTO TBL_Hoteles (ID_Hotel, Nombre, Ubicacion, Categoria, Precio_Noche) V
 (199, 'Hotel9', 'Ubicacion9', 'Categoria9', 95);
 INSERT INTO TBL_Hoteles (ID_Hotel, Nombre, Ubicacion, Categoria, Precio_Noche) VALUES 
 (200, 'Hotel10', 'Ubicacion10', 'Categoria10', 100);
+
+-- Inserción de datos en la tabla: TOURS
 
 INSERT INTO TBL_Tours (ID_Tour, Nombre, Descripcion, Duracion, Precio) VALUES 
 (1, 'Tour1', 'Descripcion del Tour 1', 'Duracion1 horas', 45);
@@ -1745,6 +1782,7 @@ INSERT INTO TBL_Tours (ID_Tour, Nombre, Descripcion, Duracion, Precio) VALUES
 INSERT INTO TBL_Tours (ID_Tour, Nombre, Descripcion, Duracion, Precio) VALUES 
 (200, 'Tour10', 'Descripcion del Tour 10', 'Duracion10 horas', 180);
 
+-- Inserción de datos en la tabla: EMPLEADOS
 
 INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
 (1, 'EmpleadoNombre1', 'EmpleadoApellido1', 'Cargo1', '123-456-7001', 'empleado1@example.com');
@@ -2168,6 +2206,8 @@ INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email
 INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
 (200, 'EmpleadoNombre10', 'EmpleadoApellido10', 'Cargo10', '123-456-7010', 'empleado10@example.com');
 
+
+-- Inserción de datos en la tabla: RESERVAS
 INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
 (1, 1, 2, 2);
 INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
@@ -2569,6 +2609,7 @@ INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES
 INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
 (200, 200, 1, 1);
 
+-- Inserción de datos en la tabla: PAGOS
 INSERT INTO TBL_Pagos (ID_Pago, Monto, Fecha_Pago, Metodo_Pago) VALUES 
 (1, 52, TO_DATE('2024-12-01', 'YYYY-MM-DD') + 1, 'Metodo2');
 INSERT INTO TBL_Pagos (ID_Pago, Monto, Fecha_Pago, Metodo_Pago) VALUES 
@@ -2769,7 +2810,6 @@ INSERT INTO TBL_Pagos (ID_Pago, Monto, Fecha_Pago, Metodo_Pago) VALUES
 (99, 248, TO_DATE('2024-12-01', 'YYYY-MM-DD') + 9, 'Metodo1');
 INSERT INTO TBL_Pagos (ID_Pago, Monto, Fecha_Pago, Metodo_Pago) VALUES 
 (100, 250, TO_DATE('2024-12-01', 'YYYY-MM-DD') + 10, 'Metodo2');
-
 INSERT INTO TBL_Pagos (ID_Pago, Monto, Fecha_Pago, Metodo_Pago) VALUES 
 (101, 252, TO_DATE('2024-12-01', 'YYYY-MM-DD') + 11, 'Metodo3');
 INSERT INTO TBL_Pagos (ID_Pago, Monto, Fecha_Pago, Metodo_Pago) VALUES 
@@ -2971,6 +3011,7 @@ INSERT INTO TBL_Pagos (ID_Pago, Monto, Fecha_Pago, Metodo_Pago) VALUES
 INSERT INTO TBL_Pagos (ID_Pago, Monto, Fecha_Pago, Metodo_Pago) VALUES 
 (200, 450, TO_DATE('2024-12-01', 'YYYY-MM-DD') + 20, 'Metodo3');
 
+-- Inserción de datos en la tabla: RESERVAS/TOURS
 INSERT INTO TBL_Reservas_Tours (ID_Reserva_Tour, ID_Reserva, ID_Tour) VALUES 
 (1, 1, 2);
 INSERT INTO TBL_Reservas_Tours (ID_Reserva_Tour, ID_Reserva, ID_Tour) VALUES 
@@ -3372,6 +3413,7 @@ INSERT INTO TBL_Reservas_Tours (ID_Reserva_Tour, ID_Reserva, ID_Tour) VALUES
 INSERT INTO TBL_Reservas_Tours (ID_Reserva_Tour, ID_Reserva, ID_Tour) VALUES 
 (200, 100, 1);
 
+-- Inserción de datos en la tabla: EMPLEADOS
 INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
 (1, 'Juan', 'Pérez', 'Gerente', '123-456-7890', 'juan.perez@empresa.com');
 INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
@@ -3771,656 +3813,6 @@ INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email
 INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
 (199, 'David', 'Sánchez', 'Marketing', '123-456-7898', 'david.sanchez@empresa.com');
 INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
-(200, 'Elena', 'Morales', 'Ventas', '123-456-7899', 'elena.morales@empresa.com');
+(200, 'Elena', 'Morales', 'Ventas', '123-456-7899', 'elena.morales@empresa.com');*/
 
-CREATE OR REPLACE PROCEDURE SP_Insert_Cliente 
-(
-    p_ID_Cliente IN INT,
-    p_Nombre IN VARCHAR2,
-    p_Apellido IN VARCHAR2,
-    p_Email IN VARCHAR2,
-    p_Telefono IN VARCHAR2,
-    p_Direccion IN VARCHAR2
-) 
-AS
-BEGIN
-    INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) VALUES 
-	(p_ID_Cliente, p_Nombre, p_Apellido, p_Email, p_Telefono, p_Direccion);
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Update_Cliente 
-(
-    p_ID_Cliente IN INT,
-    p_Nombre IN VARCHAR2,
-    p_Apellido IN VARCHAR2,
-    p_Email IN VARCHAR2,
-    p_Telefono IN VARCHAR2,
-    p_Direccion IN VARCHAR2
-) 
-AS
-BEGIN
-    UPDATE TBL_Clientes
-    SET 
-	Nombre = p_Nombre,
-    Apellido = p_Apellido,
-    Email = p_Email,
-    Telefono = p_Telefono,
-    Direccion = p_Direccion
-    WHERE ID_Cliente = p_ID_Cliente;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Delete_Cliente 
-(
-    p_ID_Cliente IN INT
-) 
-AS
-BEGIN
-    DELETE FROM TBL_Clientes
-    WHERE ID_Cliente = p_ID_Cliente;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Insert_Reserva 
-(
-    p_ID_Reserva IN INT,
-    p_ID_Cliente IN INT,
-    p_ID_Vuelo IN INT,
-    p_ID_Hotel IN INT
-) 
-AS
-BEGIN
-    INSERT INTO TBL_Reservas (ID_Reserva, ID_Cliente, ID_Vuelo, ID_Hotel) VALUES 
-	(p_ID_Reserva, p_ID_Cliente, p_ID_Vuelo, p_ID_Hotel);
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Update_Reserva 
-(
-    p_ID_Reserva IN INT,
-    p_ID_Cliente IN INT,
-    p_ID_Vuelo IN INT,
-    p_ID_Hotel IN INT
-) 
-AS
-BEGIN
-    UPDATE TBL_Reservas
-    SET 
-	ID_Cliente = p_ID_Cliente,
-    ID_Vuelo = p_ID_Vuelo,
-    ID_Hotel = p_ID_Hotel
-    WHERE ID_Reserva = p_ID_Reserva;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Delete_Reserva 
-(
-    p_ID_Reserva IN INT
-) 
-AS
-BEGIN
-    DELETE FROM TBL_Reservas
-    WHERE ID_Reserva = p_ID_Reserva;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Insert_Vuelo 
-(
-    p_ID_Vuelo IN INT,
-    p_Aerolinea IN VARCHAR2,
-    p_Origen IN VARCHAR2,
-    p_Destino IN VARCHAR2,
-    p_Fecha_Salida IN DATE,
-    p_Fecha_Llegada IN DATE,
-    p_Precio IN NUMBER
-) 
-AS
-BEGIN
-    INSERT INTO TBL_Vuelos (ID_Vuelo, Aerolinea, Origen, Destino, Fecha_Salida, Fecha_Llegada, Precio) VALUES 
-	(p_ID_Vuelo, p_Aerolinea, p_Origen, p_Destino, p_Fecha_Salida, p_Fecha_Llegada, p_Precio);
-END;
-/
-
-CREATE OR REPLACE VIEW VW_Clientes 
-AS
-SELECT 
-    ID_Cliente,
-    Nombre,
-    Apellido,
-    Email,
-    Telefono,
-    Direccion
-FROM TBL_Clientes;
-/
-
-CREATE OR REPLACE VIEW VW_Reservas 
-AS
-SELECT 
-    ID_Reserva,
-    ID_Cliente,
-    ID_Vuelo,
-    ID_Hotel
-FROM TBL_Reservas;
-/
-
-CREATE OR REPLACE VIEW VW_Vuelos 
-AS
-SELECT 
-    ID_Vuelo,
-    Aerolinea,
-    Origen,
-    Destino,
-    Fecha_Salida,
-    Fecha_Llegada,
-    Precio
-FROM TBL_Vuelos;
-/
-
-CREATE OR REPLACE VIEW VW_Hoteles 
-AS
-SELECT 
-    ID_Hotel,
-    Nombre,
-    Ubicacion,
-    Categoria,
-    Precio_Noche
-FROM TBL_Hoteles;
-/
-
-CREATE OR REPLACE VIEW VW_Pagos 
-AS
-SELECT 
-    ID_Pago,
-    Monto,
-    Fecha_Pago,
-    Metodo_Pago
-FROM TBL_Pagos;
-/
-
-CREATE OR REPLACE VIEW VW_Tours 
-AS
-SELECT 
-    ID_Tour,
-    Nombre,
-    Descripcion,
-    Duracion,
-    Precio
-FROM TBL_Tours;
-/
-
-CREATE OR REPLACE VIEW VW_Reservas_Tours 
-AS
-SELECT 
-    ID_Reserva_Tour,
-    ID_Reserva,
-    ID_Tour
-FROM TBL_Reservas_Tours;
-/
-
-CREATE OR REPLACE VIEW VW_Empleados 
-AS
-SELECT 
-    ID_Empleado,
-    Nombre,
-    Apellido,
-    Cargo,
-    Telefono,
-    Email
-FROM TBL_Empleados;
-/
-
-SELECT * 
-FROM VW_Clientes;
-
-SELECT * 
-FROM VW_Clientes
-WHERE Nombre = 'Juan';
-
-SELECT * 
-FROM VW_Reservas;
-
-SELECT * 
-FROM VW_Reservas
-WHERE ID_Cliente = 1;
-
-SELECT * 
-FROM VW_Vuelos;
-
-SELECT * 
-FROM VW_Vuelos
-WHERE Destino = 'Nueva York';
-
-SELECT * 
-FROM VW_Vuelos
-WHERE Precio 
-BETWEEN 100 AND 500;
-
-SELECT * 
-FROM VW_Hoteles;
-
-SELECT * 
-FROM VW_Hoteles
-WHERE Categoria = '5 Estrellas';
-
-SELECT * 
-FROM VW_Pagos;
-
-SELECT * 
-FROM VW_Pagos
-WHERE Metodo_Pago = 'Tarjeta de Crédito';
-
-SELECT * 
-FROM VW_Tours;
-
-SELECT * 
-FROM VW_Tours
-WHERE Precio < 200;
-
-SELECT * 
-FROM VW_Reservas_Tours;
-
-SELECT * 
-FROM VW_Reservas_Tours
-WHERE ID_Tour = 5;
-
-SELECT * 
-FROM VW_Empleados;
-
-SELECT * 
-FROM VW_Empleados
-WHERE Cargo = 'Gerente';
-
-SELECT 
-    R.ID_Reserva, 
-    C.Nombre AS Cliente, 
-    V.Aerolinea, 
-    V.Destino
-FROM VW_Reservas R
-JOIN VW_Clientes C 
-ON R.ID_Cliente = C.ID_Cliente
-JOIN VW_Vuelos V 
-ON R.ID_Vuelo = V.ID_Vuelo;
-
-SELECT 
-    P.ID_Pago, 
-    C.Nombre AS Cliente, 
-    P.Monto, 
-    P.Metodo_Pago
-FROM VW_Pagos P
-JOIN VW_Reservas R 
-ON P.ID_Reserva = R.ID_Reserva
-JOIN VW_Clientes C 
-ON R.ID_Cliente = C.ID_Cliente;
-
-SELECT 
-    C.Nombre AS Cliente, 
-    T.Nombre AS Tour, 
-    T.Precio
-FROM VW_Reservas_Tours RT
-JOIN VW_Reservas R 
-ON RT.ID_Reserva = R.ID_Reserva
-JOIN VW_Clientes C 
-ON R.ID_Cliente = C.ID_Cliente
-JOIN VW_Tours T
-ON RT.ID_Tour = T.ID_Tour;
-
-CREATE OR REPLACE PROCEDURE SP_Update_Vuelo 
-(
-    p_ID_Vuelo IN INT,
-    p_Aerolinea IN VARCHAR2,
-    p_Origen IN VARCHAR2,
-    p_Destino IN VARCHAR2,
-    p_Fecha_Salida IN DATE,
-    p_Fecha_Llegada IN DATE,
-    p_Precio IN NUMBER
-) 
-AS
-BEGIN
-    UPDATE TBL_Vuelos
-    SET 
-	Aerolinea = p_Aerolinea,
-    Origen = p_Origen,
-    Destino = p_Destino,
-    Fecha_Salida = p_Fecha_Salida,
-    Fecha_Llegada = p_Fecha_Llegada,
-    Precio = p_Precio
-    WHERE ID_Vuelo = p_ID_Vuelo;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Delete_Vuelo 
-(
-    p_ID_Vuelo IN INT
-) 
-AS
-BEGIN
-    DELETE FROM TBL_Vuelos
-    WHERE ID_Vuelo = p_ID_Vuelo;
-END;
-/
-
-
-CREATE OR REPLACE PROCEDURE SP_Insert_Hotel 
-(
-    p_ID_Hotel IN INT,
-    p_Nombre IN VARCHAR2,
-    p_Ubicacion IN VARCHAR2,
-    p_Categoria IN VARCHAR2,
-    p_Precio_Noche IN NUMBER
-) 
-AS
-BEGIN
-    INSERT INTO TBL_Hoteles (ID_Hotel, Nombre, Ubicacion, Categoria, Precio_Noche) VALUES 
-	(p_ID_Hotel, p_Nombre, p_Ubicacion, p_Categoria, p_Precio_Noche);
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Update_Hotel 
-(
-    p_ID_Hotel IN INT,
-    p_Nombre IN VARCHAR2,
-    p_Ubicacion IN VARCHAR2,
-    p_Categoria IN VARCHAR2,
-    p_Precio_Noche IN NUMBER
-) 
-AS
-BEGIN
-    UPDATE TBL_Hoteles
-    SET 
-	Nombre = p_Nombre,
-    Ubicacion = p_Ubicacion,
-    Categoria = p_Categoria,
-    Precio_Noche = p_Precio_Noche
-    WHERE ID_Hotel = p_ID_Hotel;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Delete_Hotel 
-(
-    p_ID_Hotel IN INT
-) 
-AS
-BEGIN
-    DELETE FROM TBL_Hoteles
-    WHERE ID_Hotel = p_ID_Hotel;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Insert_Pago 
-(
-    p_ID_Pago IN INT,
-    p_Monto IN NUMBER,
-    p_Fecha_Pago IN DATE,
-    p_Metodo_Pago IN VARCHAR2
-) 
-AS
-BEGIN
-    INSERT INTO TBL_Pagos (ID_Pago, Monto, Fecha_Pago, Metodo_Pago) VALUES 
-	(p_ID_Pago, p_Monto, p_Fecha_Pago, p_Metodo_Pago);
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Update_Pago 
-(
-    p_ID_Pago IN INT,
-    p_Monto IN NUMBER,
-    p_Fecha_Pago IN DATE,
-    p_Metodo_Pago IN VARCHAR2
-) 
-AS
-BEGIN
-    UPDATE TBL_Pagos
-    SET 
-	Monto = p_Monto,
-    Fecha_Pago = p_Fecha_Pago,
-    Metodo_Pago = p_Metodo_Pago
-    WHERE ID_Pago = p_ID_Pago;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Delete_Pago 
-(
-    p_ID_Pago IN INT
-) 
-AS
-BEGIN
-    DELETE FROM TBL_Pagos
-    WHERE ID_Pago = p_ID_Pago;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Insert_Tour 
-(
-    p_ID_Tour IN INT,
-    p_Nombre IN VARCHAR2,
-    p_Descripcion IN VARCHAR2,
-    p_Duracion IN VARCHAR2,
-    p_Precio IN NUMBER
-) 
-AS
-BEGIN
-    INSERT INTO TBL_Tours (ID_Tour, Nombre, Descripcion, Duracion, Precio) VALUES 
-	(p_ID_Tour, p_Nombre, p_Descripcion, p_Duracion, p_Precio);
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Update_Tour 
-(
-    p_ID_Tour IN INT,
-    p_Nombre IN VARCHAR2,
-    p_Descripcion IN VARCHAR2,
-    p_Duracion IN VARCHAR2,
-    p_Precio IN NUMBER
-) 
-AS
-BEGIN
-    UPDATE TBL_Tours
-    SET 
-	Nombre = p_Nombre,
-    Descripcion = p_Descripcion,
-    Duracion = p_Duracion,
-    Precio = p_Precio
-    WHERE ID_Tour = p_ID_Tour;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Delete_Tour 
-(
-    p_ID_Tour IN INT
-) 
-AS
-BEGIN
-    DELETE FROM TBL_Tours
-    WHERE ID_Tour = p_ID_Tour;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Insert_Reserva_Tour 
-(
-    p_ID_Reserva_Tour IN INT,
-    p_ID_Reserva IN INT,
-    p_ID_Tour IN INT
-) 
-AS
-BEGIN
-    INSERT INTO TBL_Reservas_Tours (ID_Reserva_Tour, ID_Reserva, ID_Tour) VALUES 
-	(p_ID_Reserva_Tour, p_ID_Reserva, p_ID_Tour);
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Update_Reserva_Tour 
-(
-    p_ID_Reserva_Tour IN INT,
-    p_ID_Reserva IN INT,
-    p_ID_Tour IN INT
-) 
-AS
-BEGIN
-    UPDATE TBL_Reservas_Tours
-    SET 
-	ID_Reserva = p_ID_Reserva,
-    ID_Tour = p_ID_Tour
-    WHERE ID_Reserva_Tour = p_ID_Reserva_Tour;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Delete_Reserva_Tour 
-(
-    p_ID_Reserva_Tour IN INT
-) 
-AS
-BEGIN
-    DELETE FROM TBL_Reservas_Tours
-    WHERE ID_Reserva_Tour = p_ID_Reserva_Tour;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Insert_Empleado 
-(
-    p_ID_Empleado IN INT,
-    p_Nombre IN VARCHAR2,
-    p_Apellido IN VARCHAR2,
-    p_Cargo IN VARCHAR2,
-    p_Telefono IN VARCHAR2,
-    p_Email IN VARCHAR2
-) 
-AS
-BEGIN
-    INSERT INTO TBL_Empleados (ID_Empleado, Nombre, Apellido, Cargo, Telefono, Email) VALUES 
-	(p_ID_Empleado, p_Nombre, p_Apellido, p_Cargo, p_Telefono, p_Email);
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Update_Empleado 
-(
-    p_ID_Empleado IN INT,
-    p_Nombre IN VARCHAR2,
-    p_Apellido IN VARCHAR2,
-    p_Cargo IN VARCHAR2,
-    p_Telefono IN VARCHAR2,
-    p_Email IN VARCHAR2
-) 
-AS
-BEGIN
-    UPDATE TBL_Empleados
-    SET 
-	Nombre = p_Nombre,
-    Apellido = p_Apellido,
-    Cargo = p_Cargo,
-    Telefono = p_Telefono,
-    Email = p_Email
-    WHERE ID_Empleado = p_ID_Empleado;
-END;
-/
-
-CREATE OR REPLACE PROCEDURE SP_Delete_Empleado 
-(
-    p_ID_Empleado IN INT
-) 
-AS
-BEGIN
-    DELETE FROM TBL_Empleados
-    WHERE ID_Empleado = p_ID_Empleado;
-END;
-/
-
-CREATE OR REPLACE TRIGGER TRG_Clientes_Insert
-AFTER INSERT ON TBL_Clientes
-FOR EACH ROW
-BEGIN
-    INSERT INTO TBL_Historial (Tabla, Operacion, Fecha, Detalle)
-    VALUES 
-	('TBL_Clientes', 'INSERT', SYSDATE, 'Cliente creado: ' || :NEW.Nombre || ' ' || :NEW.Apellido);
-END;
-/
-
-CREATE OR REPLACE TRIGGER TRG_Reservas_Update
-AFTER UPDATE ON TBL_Reservas
-FOR EACH ROW
-BEGIN
-    INSERT INTO TBL_Historial (Tabla, Operacion, Fecha, Detalle)
-    VALUES 
-	('TBL_Reservas', 'UPDATE', SYSDATE, 'Reserva modificada. ID Reserva: ' || :NEW.ID_Reserva);
-END;
-/
-
-CREATE OR REPLACE TRIGGER TRG_Vuelos_Delete
-BEFORE DELETE ON TBL_Vuelos
-FOR EACH ROW
-DECLARE
-    v_Reservas INT;
-BEGIN
-    SELECT COUNT(*) INTO v_Reservas
-    FROM TBL_Reservas
-    WHERE ID_Vuelo = :OLD.ID_Vuelo;
-    
-    IF v_Reservas > 0 THEN
-        RAISE_APPLICATION_ERROR(-20001, 'No se puede eliminar el vuelo porque tiene reservas asociadas.');
-    END IF;
-END;
-/
-
-CREATE OR REPLACE TRIGGER TRG_Hoteles_Delete
-AFTER DELETE ON TBL_Hoteles
-FOR EACH ROW
-BEGIN
-    INSERT INTO TBL_Historial (Tabla, Operacion, Fecha, Detalle)
-    VALUES ('TBL_Hoteles', 'DELETE', SYSDATE, 'Hotel eliminado: ' || :OLD.Nombre || ', Ubicación: ' || :OLD.Ubicacion);
-END;
-/
-
-CREATE OR REPLACE TRIGGER TRG_Pagos_Insert
-AFTER INSERT ON TBL_Pagos
-FOR EACH ROW
-BEGIN
-    UPDATE TBL_Reservas
-    SET Total_Pagos = Total_Pagos + :NEW.Monto
-    WHERE ID_Reserva = :NEW.ID_Reserva;
-END;
-/
-
-CREATE OR REPLACE TRIGGER TRG_Tours_Update
-BEFORE UPDATE ON TBL_Tours
-FOR EACH ROW
-BEGIN
-    IF :NEW.Precio < 0 THEN
-        RAISE_APPLICATION_ERROR(-20002, 'El precio de un tour no puede ser negativo.');
-    END IF;
-END;
-/
-
-CREATE OR REPLACE TRIGGER TRG_Reservas_Tours_Insert
-AFTER INSERT ON TBL_Reservas_Tours
-FOR EACH ROW
-BEGIN
-    INSERT INTO TBL_Historial (Tabla, Operacion, Fecha, Detalle)
-    VALUES ('TBL_Reservas_Tours', 'INSERT', SYSDATE, 'Reserva asociada al tour. ID Reserva: ' || :NEW.ID_Reserva || ', ID Tour: ' || :NEW.ID_Tour);
-END;
-/
-
-CREATE OR REPLACE TRIGGER TRG_Empleados_Delete
-BEFORE DELETE ON TBL_Empleados
-FOR EACH ROW
-DECLARE
-    v_Tareas INT;
-BEGIN
-    SELECT COUNT(*) INTO v_Tareas
-    FROM TBL_Tareas
-    WHERE ID_Empleado = :OLD.ID_Empleado;
-    
-    IF v_Tareas > 0 THEN
-        RAISE_APPLICATION_ERROR(-20003, 'No se puede eliminar el empleado porque tiene tareas asignadas.');
-    END IF;
-END;
-/
-
-CREATE TABLE TBL_Auditoria (
-    ID_Auditoria INT PRIMARY KEY,
-    Tabla VARCHAR2(50),
-    Operacion VARCHAR2(50),
-    Fecha DATE,
-    Detalle VARCHAR2(500)
-);
-
-SELECT * FROM TBL_Auditoria;
+--------------------------------------------------------
