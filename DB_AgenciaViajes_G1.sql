@@ -220,7 +220,8 @@ VALUES (29, 'Nombre29', 'Apellido29', 'cliente29@example.com', '123-456-7829', '
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) 
 VALUES (30, 'Nombre30', 'Apellido30', 'cliente30@example.com', '123-456-7830', 'Direccion 30');
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) 
-VALUES (31, 'Nombre31', 'Apellido31', 'cliente31@example.com', '123-456-7831', 'Direccion 31');INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) 
+VALUES (31, 'Nombre31', 'Apellido31', 'cliente31@example.com', '123-456-7831', 'Direccion 31');
+INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) 
 VALUES (32, 'Nombre32', 'Apellido32', 'cliente32@example.com', '123-456-7832', 'Direccion 32');
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) 
 VALUES (33, 'Nombre33', 'Apellido33', 'cliente33@example.com', '123-456-7833', 'Direccion 33');
