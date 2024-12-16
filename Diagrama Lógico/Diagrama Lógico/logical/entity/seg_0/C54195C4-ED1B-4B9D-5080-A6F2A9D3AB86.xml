@@ -1,0 +1,111 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="C54195C4-ED1B-4B9D-5080-A6F2A9D3AB86" name="TBL_Tours">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 20:20:41 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID_Tour" id="6739485D-CF31-0E60-1FEA-96045C25EF5F">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 20:21:04 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Nombre" id="7A581CAB-9F1C-D56B-72D1-C7762ADC7661">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 20:21:33 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Descripcion" id="251D80E4-06D1-BDC5-7B1B-2CBCD6BD58A2">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 20:21:54 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Duracion" id="B1A794CF-5A2E-6BC5-8622-F33EC8F29787">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 20:22:33 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Precio" id="A1C75BB5-1B35-AE9E-3684-C75BE3CE4D2B">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 20:23:07 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID_Reserva_Tour" id="30A674C2-EBD5-5159-32F0-2F335927700D">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 20:29:16 UTC</createdTime>
+<generatorID>0D10E397-C5E2-60A0-A5BA-E278DF772FB8</generatorID>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<referedAttribute>1CE70C5D-3A97-254F-33FB-20268F22D633</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="C2C94874-2FA7-4BE6-F646-39FC89571D8F" name="TBL_Tours PK">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 20:21:29 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>6739485D-CF31-0E60-1FEA-96045C25EF5F</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

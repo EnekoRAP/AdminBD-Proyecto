@@ -1,0 +1,124 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="48BEAEC2-1309-56BC-4767-5186A4BED531" name="TBL_Clientes">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:53:09 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID_Cliente (PK)" id="711CBA86-122F-C3C9-FBC3-69C7C131A277">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:53:24 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Nombre" id="262A20E3-E115-9E90-7099-42AC32DAFF6C">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:53:40 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Apellido" id="8B4CF23B-7048-3351-6A0B-685348D1EF76">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:56:39 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Email" id="FED41023-90A8-3DEC-4191-34C628868065">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:58:33 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Telefono" id="2CACD658-6E30-5F17-1310-19568C0850F7">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:59:00 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Direccion" id="2C3B81B5-6B79-9932-E1D1-BCC1CFF1D30F">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:59:36 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID_Reserva" id="52C81255-DF2A-053D-6A9D-4E81B7E5E513">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 19:03:00 UTC</createdTime>
+<generatorID>93D073C9-65F2-5CE8-74CA-6F2E78D2663D</generatorID>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<referedAttribute>BFE7D66C-E359-7487-5323-AB9C40C13544</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="0F9D7F59-1550-A1A9-073B-6E948541525E" name="TBL_Clientes PK">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:53:35 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>711CBA86-122F-C3C9-FBC3-69C7C131A277</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

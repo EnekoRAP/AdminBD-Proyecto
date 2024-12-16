@@ -1,0 +1,113 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="B7CEBE99-22D3-7581-7091-86A8D8BAD839" name="TBL_Reservas">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:51:44 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID_Reserva" id="BFE7D66C-E359-7487-5323-AB9C40C13544">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:51:55 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID_Cliente (FK)" id="0A184E70-1AC7-3DF9-8510-3E6F4205B46C">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 19:01:29 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID_Vuelo (FK)" id="CEADC5B2-8161-F46E-84BC-96A921BBACD4">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 19:18:35 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID_Hotel (FK)" id="41097858-91EA-E81E-495E-1BAF6CA39C13">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 20:10:03 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID_Pago (PK)" id="0867BB63-0B22-0A85-36F5-0F1C98374651">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 20:17:15 UTC</createdTime>
+<generatorID>F960F8F4-EF1B-465C-BB9E-DE46D93DCF87</generatorID>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<referedAttribute>B8485BC8-4D80-54E3-0881-1E1B2F61222F</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID_Empleado (PK)" id="06DE9F2F-F4BB-AEC3-70D8-36ADAB0A249F">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 21:00:43 UTC</createdTime>
+<generatorID>50D427C9-6F48-4259-8780-D72B49CA26EF</generatorID>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>2600285B-69EB-3219-244B-6A139215086D</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="FFF4E8CE-261E-DCD6-D7B9-E2B5C0C2D364" name="TBL_Reservas PK">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:52:18 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<engineerTo>
+<item key="06F5D238-C734-8299-3119-BB1FFACAF880" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>BFE7D66C-E359-7487-5323-AB9C40C13544</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

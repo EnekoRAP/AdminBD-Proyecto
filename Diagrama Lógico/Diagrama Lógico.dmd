@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Diagrama Lógico" id="C5EF848F-53D4-D1DA-69E2-D4D40361AF5C" version="3.5">
+<createdBy>Asus</createdBy>
+<createdTime>2024-12-16 18:50:18 UTC</createdTime>
+<ownerDesignName>Diagrama Lógico</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>C5EF848F-53D4-D1DA-69E2-D4D40361AF5C</designId>
+</OSDM_Design>
