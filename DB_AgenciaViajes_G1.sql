@@ -26,7 +26,7 @@ GRANT ALTER ANY PROCEDURE TO Admin_Agent;
 -- Creación de tablespace
 CREATE TABLESPACE agencia_viajes
 DATAFILE 'C:\oracle\oradata\ORCL\agencia_viajes.dbf' SIZE 100M
-AUTOEXTEND ON NEXT 50M MAXSIZE 500M;
+AUTOEXTEND ON NEXT 10M MAXSIZE UNLIMITED;
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
