@@ -1,165 +1,127 @@
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------
+////////Creación de Usuario////////
+--------------------------------------------------------------------------------------------------------------------------------------
 
 -- Crear un usuario
-CREATE USER Admin_Agent IDENTIFIED BY agent1234;
+CREATE USER Admin01 IDENTIFIED BY Admin01;
+GRANT CONNECT,RESOURCE,DBA TO Admin01;
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Otorgar privilegios 
+GRANT CREATE SESSION TO Admin01;
+GRANT CREATE TABLE TO Admin01;
+GRANT CREATE ANY TABLE TO Admin01;
+GRANT SELECT ANY TABLE TO Admin01;
+GRANT INSERT ANY TABLE TO Admin01;
+GRANT UPDATE ANY TABLE TO Admin01;
+GRANT DELETE ANY TABLE TO Admin01;
+GRANT DROP ANY TABLE TO Admin01;
+GRANT ALTER ANY TABLE TO Admin01;
+GRANT EXECUTE ANY PROCEDURE TO Admin01;
+GRANT CREATE ANY PROCEDURE TO Admin01;
+GRANT DROP ANY PROCEDURE TO Admin01;
+GRANT ALTER ANY PROCEDURE TO Admin01;
 
--- Conceder privilegios al usuario
-GRANT CONNECT, RESOURCE, DBA TO Admin_Agent;
-GRANT CREATE SESSION TO Admin_Agent;
-GRANT CREATE TABLE TO Admin_Agent;
-GRANT CREATE ANY TABLE TO Admin_Agent;
-GRANT SELECT ANY TABLE TO Admin_Agent;
-GRANT INSERT ANY TABLE TO Admin_Agent;
-GRANT UPDATE ANY TABLE TO Admin_Agent;
-GRANT DELETE ANY TABLE TO Admin_Agent;
-GRANT DROP ANY TABLE TO Admin_Agent;
-GRANT ALTER ANY TABLE TO Admin_Agent;
-GRANT EXECUTE ANY PROCEDURE TO Admin_Agent;
-GRANT CREATE ANY PROCEDURE TO Admin_Agent;
-GRANT DROP ANY PROCEDURE TO Admin_Agent;
-GRANT ALTER ANY PROCEDURE TO Admin_Agent;
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------
+//////// Creación de TableSpace ////////
+--------------------------------------------------------------------------------------------------------------------------------------
 
 -- Creación de tablespace
-CREATE TABLESPACE agencia_viajes
-DATAFILE 'C:\oracle\oradata\ORCL\agencia_viajes.dbf' SIZE 100M
+CREATE TABLESPACE TableSpaceProyecto
+DATAFILE 'C:\Oracle\proyecto\TableSpaceProyecto.dbf' 
+SIZE 100M
 AUTOEXTEND ON NEXT 10M MAXSIZE UNLIMITED;
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
--- Creación de tablespace temporal
-CREATE TEMPORARY TABLESPACE temp_agencia 
-TEMPFILE 'C:\oracle\oradata\ORCL\temp_agencia.dbf' SIZE 50M 
-AUTOEXTEND ON NEXT 25M MAXSIZE 200M;
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+  
 -- Aignar tablespace por defecto
-ALTER USER Admin_Agent DEFAULT TABLESPACE agencia_viajes;
+ALTER USER Admin01 DEFAULT TABLESPACE TableSpaceProyecto;
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------
+//////// Creación de Tablas ////////
+--------------------------------------------------------------------------------------------------------------------------------------
 
--- Asignar tablespace temporal
-ALTER USER Admin_Agent DEFAULT TABLESPACE temp_agencia;
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
--- Conectar nuevo usuario
-CONNECT Admin_Agent/agent1234;
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
--- Tabla: CLIENTES
-CREATE TABLE TBL_Clientes 
-(
-	ID_Cliente		INT 			PRIMARY KEY,
-	Nombre 			VARCHAR2(50) 	NOT NULL,
-	Apellido 		VARCHAR2(50) 	NOT NULL,
-	Email 			VARCHAR2(100) 	NOT NULL,
-	Telefono 		VARCHAR2(20) 	NOT NULL,
-	Direccion 		VARCHAR2(100) 	NOT NULL
+-- Tabla: Clientes
+CREATE TABLE TBL_Clientes (
+    ID_Cliente INT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    Telefono VARCHAR(15),
+    Direccion VARCHAR(100)
 );
 
--- Tabla: RESERVAS
-CREATE TABLE TBL_Reservas 
-(
-	ID_Reserva		INT 			PRIMARY KEY,
-	ID_Cliente     	INT,
-	ID_Vuelo       	INT,
-	ID_Hotel       	INT,
-    
-    -- Agregar llaves foráneas a RESERVAS
-	CONSTRAINT FK_ID_Cliente 
-        FOREIGN KEY (ID_Cliente) 
-        REFERENCES TBL_Clientes (ID_Cliente),
-	CONSTRAINT FK_ID_Vuelo 
-        FOREIGN KEY (ID_Vuelo) 
-        REFERENCES TBL_Vuelos (ID_Vuelo),
-	CONSTRAINT FK_ID_Hotel 
-        FOREIGN KEY (ID_Hotel) 
-        REFERENCES TBL_Hoteles (ID_Hotel)
+-- Tabla: Empleados
+CREATE TABLE TBL_Empleados (
+    ID_Empleado INT PRIMARY KEY ,
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    Cargo VARCHAR(50),
+    Telefono VARCHAR(15),
+    Email VARCHAR(100)
 );
 
--- Tabla: VUELOS
-CREATE TABLE TBL_Vuelos 
-(
-	ID_Vuelo 		INT 			PRIMARY KEY,
-	Aerolinea 		VARCHAR2(50) 	NOT NULL,
-	Origen 			VARCHAR2(50) 	NOT NULL,
-	Destino 		VARCHAR2(50) 	NOT NULL,
-	Fecha_Salida 	DATE,
-	Fecha_Llegada 	DATE,
-	Precio 			NUMBER
+-- Tabla: Hoteles
+CREATE TABLE TBL_Hoteles (
+    ID_Hotel INT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Ubicacion VARCHAR(100),
+    Categoria VARCHAR(20),
+    Precio_Noche DECIMAL(10,2)
 );
 
--- Tabla: HOTELES
-CREATE TABLE TBL_Hoteles 
-(
-	ID_Hotel 		INT 			PRIMARY KEY,
-	Nombre 			VARCHAR2(50) 	NOT NULL,
-	Ubicacion 		VARCHAR2(50) 	NOT NULL,
-	Categoria 		VARCHAR2(20) 	NOT NULL,
-	Precio_Noche 	NUMBER
+-- Tabla: Vuelos
+CREATE TABLE TBL_Vuelos (
+    ID_Vuelo INT PRIMARY KEY,
+    Aerolinea VARCHAR(50),
+    Origen VARCHAR(50),
+    Destino VARCHAR(50),
+    Fecha_Salida DATE,
+    Fecha_Llegada DATE,
+    Precio DECIMAL(10,2)
 );
 
--- Tabla: PAGOS
-CREATE TABLE TBL_Pagos 
-(
-	ID_Pago 		INT 			PRIMARY KEY,
-	Monto 			DECIMAL(10,2) NOT NULL,
-	Fecha_Pago 		DATE,
-	Metodo_Pago 	VARCHAR2(20) 	NOT NULL,
-    ID_Reserva 		INT,
-    
-    -- Agregar llave foránea a PAGOS		
-    CONSTRAINT ID_Reserva_FK 
-        FOREIGN KEY (ID_Reserva) 
-        REFERENCES TBL_Reservas (ID_Reserva)
+-- Tabla: Tours
+CREATE TABLE TBL_Tours (
+    ID_Tour INT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Descripcion CLOB,
+    Duracion INT,
+    Precio DECIMAL(10,2)
 );
 
--- Tabla: TOURS
-CREATE TABLE TBL_Tours
-(
-	ID_Tour 		INT 			PRIMARY KEY,
-	Nombre 			VARCHAR2(50) 	NOT NULL,
-	Descripcion 	VARCHAR2(100) 	NOT NULL,
-	Duracion 		VARCHAR2(20) 	NOT NULL,
-	Precio 			NUMBER
+-- Tabla: Reservas
+CREATE TABLE TBL_Reservas (
+    ID_Reserva INT PRIMARY KEY,
+    ID_Cliente INT,
+    ID_Vuelo INT,
+    ID_Hotel INT,
+    FOREIGN KEY (ID_Cliente) REFERENCES TBL_Clientes(ID_Cliente),
+    FOREIGN KEY (ID_Vuelo) REFERENCES TBL_Vuelos(ID_Vuelo),
+    FOREIGN KEY (ID_Hotel) REFERENCES TBL_Hoteles(ID_Hotel)
 );
 
--- Tabla: RESERVAS/TOURS
-CREATE TABLE TBL_Reservas_Tours 
-(
-	ID_Reserva_Tour INT 			PRIMARY KEY,
-	ID_Reserva 		INT,
-	ID_Tour 		INT,
-    
-    -- Agregar llaves foráneas a RESERVAS/TOURS
-	CONSTRAINT FK_ID_Reserva 
-        FOREIGN KEY (ID_Reserva) 
-        REFERENCES TBL_Reservas (ID_Reserva),
-	CONSTRAINT FK_ID_Tour 
-        FOREIGN KEY (ID_Tour) 
-        REFERENCES TBL_Tours (ID_Tour)
+-- Tabla: Pagos
+CREATE TABLE TBL_Pagos (
+    ID_Pago INT PRIMARY KEY,
+    Monto DECIMAL(10,2) NOT NULL,
+    Fecha_Pago DATE NOT NULL,
+    Metodo_Pago VARCHAR(20),
+    ID_Reserva INT,
+    FOREIGN KEY (ID_Reserva) REFERENCES TBL_Reservas(ID_Reserva)
 );
 
--- Tabla: EMPLEADOS
-CREATE TABLE TBL_Empleados
-(
-	ID_Empleado 	INT 			PRIMARY KEY,
-	Nombre 			VARCHAR2(50) 	NOT NULL,
-	Apellido 		VARCHAR2(50) 	NOT NULL,
-	Cargo 			VARCHAR2(20) 	NOT NULL,
-	Telefono 		VARCHAR2(20) 	NOT NULL,
-	Email 			VARCHAR2(100) 	NOT NULL
+-- Tabla: Reservas_Tours
+CREATE TABLE TBL_Reservas_Tours (
+    ID_Reserva_Tour INT PRIMARY KEY ,
+    ID_Reserva INT,
+    ID_Tour INT,
+    FOREIGN KEY (ID_Reserva) REFERENCES TBL_Reservas(ID_Reserva),
+    FOREIGN KEY (ID_Tour) REFERENCES TBL_Tours(ID_Tour)
 );
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------
+//////// Inserts de las Tablas ////////
+--------------------------------------------------------------------------------------------------------------------------------------
 
--- Inserción de datos en la tabla: CLIENTES
+-- Inserts de la tabla: Clientes
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) 
 VALUES (1, 'Juan', 'Pérez', 'juan.perez@example.com', '123456789', 'Calle 1, Ciudad A');
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) 
@@ -381,15 +343,431 @@ INSERT INTO TBL_Clientes VALUES (198, 'Carla', 'Salazar', 'carla.salazar@example
 INSERT INTO TBL_Clientes VALUES (199, 'Gerardo', 'Ruiz', 'gerardo.ruiz@example.com', '999000111', 'Calle 199, Ciudad MMMM');
 INSERT INTO TBL_Clientes VALUES (200, 'Veronica', 'Jimenez', 'veronica.jimenez@example.com', '000111222', 'Calle 200, Ciudad NNNN');
 
--- Operaciones CRUD de CLIENTES
-
+-- Operaciones CRUD para la tabla: Clientes
 SELECT * FROM TBL_Clientes;
 
 UPDATE TBL_Clientes
 SET Nombre = 'Mario', Apellido = 'Rojas', Email = 'maroja.email@example.com', Telefono = '8899900011', Direccion = 'Barreal de Heredia'
 WHERE ID_Cliente = 1;
 
--- Inserción de datos en la tabla: VUELOS
+--Insert de la tabla: Empleados
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Ramirez', 'Piloto', '555-1234', 'carlos.ramirez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ana', 'Gomez', 'Azafata', '555-5678', 'ana.gomez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'Martinez', 'Desarrollador de Sistemas', '555-9876', 'luis.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Maria', 'Lopez', 'Recepcionista', '555-1357', 'maria.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Pedro', 'Hernandez', 'Mecánico de Aviación', '555-2468', 'pedro.hernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Laura', 'Perez', 'Directora de Marketing', '555-3579', 'laura.perez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Javier', 'Diaz', 'Piloto', '555-4680', 'javier.diaz@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sofia', 'Garcia', 'Azafata', '555-5791', 'sofia.garcia@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Victor', 'Sanchez', 'Ingeniero de Aviones', '555-6802', 'victor.sanchez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Elena', 'Torres', 'Jefa de Atención al Cliente', '555-7913', 'elena.torres@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Jimenez', 'Cocinero de Aerolínea', '555-8024', 'ricardo.jimenez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Patricia', 'Ruiz', 'Diseñadora de Uniformes', '555-9135', 'patricia.ruiz@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Rafael', 'Moreno', 'Jefe de Mantenimiento', '555-0246', 'rafael.moreno@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Mariana', 'Vega', 'Gerente de Proyectos', '555-1358', 'mariana.vega@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Fernando', 'Romero', 'Técnico de Aviones', '555-2469', 'fernando.romero@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'Castillo', 'Analista de Rutas', '555-3570', 'isabel.castillo@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'Fernandez', 'Asistente de Aeropuerto', '555-4681', 'luis.fernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Angela', 'Mendez', 'Coordinadora de Vuelo', '555-5792', 'angela.mendez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Oscar', 'Silva', 'Piloto', '555-6803', 'oscar.silva@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Cristina', 'Rios', 'Azafata', '555-7914', 'cristina.rios@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sergio', 'Paredes', 'Controlador de Tráfico Aéreo', '555-8025', 'sergio.paredes@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Marta', 'Alvarez', 'Gerente de Finanzas', '555-9136', 'marta.alvarez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Gonzalez', 'Asistente de Vuelo', '555-0247', 'carlos.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Daniela', 'Serrano', 'Piloto', '555-1359', 'daniela.serrano@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Alberto', 'Rojas', 'Ingeniero de Aviones', '555-2460', 'alberto.rojas@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Jorge', 'Salazar', 'Jefe de Seguridad Aeroportuaria', '555-3571', 'jorge.salazar@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Susana', 'Campos', 'Gerente de Operaciones', '555-4682', 'susana.campos@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Francisco', 'Zuniga', 'Piloto', '555-5793', 'francisco.zuniga@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Vanessa', 'Pinto', 'Azafata', '555-6804', 'vanessa.pinto@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Martin', 'Castro', 'Coordinador de Logística', '555-7915', 'martin.castro@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Claudia', 'Guerrero', 'Gestor de Clientes', '555-8026', 'claudia.guerrero@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Joaquín', 'Cordero', 'Piloto', '555-9137', 'joaquin.cordero@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Eduardo', 'Muñoz', 'Director de Operaciones', '555-0248', 'eduardo.munoz@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raquel', 'Blanco', 'Azafata', '555-1350', 'raquel.blanco@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raul', 'Luna', 'Piloto', '555-2461', 'raul.luna@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Paula', 'Ruiz', 'Técnico de Mantenimiento', '555-3572', 'paula.ruiz@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Miguel', 'Vazquez', 'Coordinador de Vuelo', '555-4683', 'miguel.vazquez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Julia', 'Martinez', 'Jefa de Atención al Cliente', '555-5794', 'julia.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Gustavo', 'Herrera', 'Piloto', '555-6805', 'gustavo.herrera@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Nuria', 'López', 'Azafata', '555-7916', 'nuria.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Iván', 'Martinez', 'Piloto', '555-1239', 'ivan.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sandra', 'Vega', 'Azafata', '555-1240', 'sandra.vega@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Rodriguez', 'Técnico de Mantenimiento', '555-1241', 'carlos.rodriguez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Martín', 'Fernandez', 'Desarrollador de Sistemas', '555-1242', 'martin.fernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Alicia', 'Ramirez', 'Azafata', '555-1243', 'alicia.ramirez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Julio', 'Alonso', 'Piloto', '555-1244', 'julio.alonso@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Marta', 'Gonzalez', 'Coordinadora de Vuelo', '555-1245', 'marta.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Pérez', 'Piloto', '555-1246', 'carlos.perez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'Díaz', 'Azafata', '555-1247', 'isabel.diaz@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Gonzalez', 'Mecánico de Aviación', '555-1248', 'ricardo.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Paula', 'Silva', 'Azafata', '555-1249', 'paula.silva@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sergio', 'Lopez', 'Piloto', '555-1250', 'sergio.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Elena', 'Herrera', 'Jefa de Seguridad Aeroportuaria', '555-1251', 'elena.herrera@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Jorge', 'Moreno', 'Azafata', '555-1252', 'jorge.moreno@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ana', 'Fernandez', 'Coordinadora de Vuelo', '555-1253', 'ana.fernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('David', 'Sánchez', 'Piloto', '555-1254', 'david.sanchez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Claudia', 'García', 'Azafata', '555-1255', 'claudia.garcia@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Cristina', 'Rios', 'Ingeniero de Aviación', '555-1256', 'cristina.rios@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Andrés', 'Lozano', 'Piloto', '555-1257', 'andres.lozano@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Rafael', 'Morales', 'Azafata', '555-1258', 'rafael.morales@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lucas', 'Gonzalez', 'Jefe de Mantenimiento', '555-1259', 'lucas.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lorena', 'Serrano', 'Piloto', '555-1260', 'lorena.serrano@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raúl', 'Alvarez', 'Azafata', '555-1261', 'raul.alvarez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Daniel', 'Martínez', 'Jefe de Aeropuerto', '555-1262', 'daniel.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('María', 'Santos', 'Piloto', '555-1263', 'maria.santos@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Lopez', 'Azafata', '555-1264', 'antonio.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Verónica', 'Ramírez', 'Ingeniero de Aviación', '555-1265', 'veronica.ramirez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Hernández', 'Piloto', '555-1266', 'carlos.hernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Laura', 'Martínez', 'Azafata', '555-1267', 'laura.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('David', 'García', 'Piloto', '555-1268', 'david.garcia@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Felipe', 'Sánchez', 'Coordinador de Aeropuerto', '555-1269', 'felipe.sanchez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carmen', 'Pérez', 'Azafata', '555-1270', 'carmen.perez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Morales', 'Piloto', '555-1271', 'ricardo.morales@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ana', 'González', 'Azafata', '555-1272', 'ana.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Ramírez', 'Piloto', '555-1273', 'jose.ramirez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Laura', 'Salazar', 'Azafata', '555-1274', 'laura.salazar@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Esteban', 'García', 'Mecánico de Aviación', '555-1275', 'esteban.garcia@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('María', 'Blanco', 'Técnico de Aviones', '555-1276', 'maria.blanco@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Soto', 'Azafata', '555-1277', 'carlos.soto@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Lopez', 'Piloto', '555-1278', 'jose.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Claudia', 'Jiménez', 'Azafata', '555-1279', 'claudia.jimenez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Pérez', 'Ingeniero de Aviación', '555-1280', 'ricardo.perez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Marta', 'Hernández', 'Azafata', '555-1281', 'marta.hernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Rodríguez', 'Piloto', '555-1282', 'carlos.rodriguez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Beatriz', 'Alvarez', 'Azafata', '555-1283', 'beatriz.alvarez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Pedro', 'Sánchez', 'Coordinador de Vuelo', '555-1284', 'pedro.sanchez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Juan', 'González', 'Piloto', '555-1285', 'juan.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lorena', 'Martínez', 'Azafata', '555-1286', 'lorena.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sergio', 'Hernández', 'Piloto', '555-1287', 'sergio.hernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Patricia', 'López', 'Azafata', '555-1288', 'patricia.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Alberto', 'Jiménez', 'Jefe de Mantenimiento', '555-1289', 'alberto.jimenez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Francisco', 'Pérez', 'Piloto', '555-1290', 'francisco.perez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'García', 'Azafata', '555-1291', 'isabel.garcia@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Juan', 'Santos', 'Piloto', '555-1292', 'juan.santos@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raquel', 'Fernández', 'Azafata', '555-1293', 'raquel.fernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('David', 'Lopez', 'Piloto', '555-1294', 'david.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Laura', 'González', 'Azafata', '555-1295', 'laura.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Ramírez', 'Piloto', '555-1296', 'antonio.ramirez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Victoria', 'Pérez', 'Azafata', '555-1297', 'victoria.perez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Fernando', 'Vázquez', 'Piloto', '555-1298', 'fernando.vazquez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('María', 'Serrano', 'Azafata', '555-1299', 'maria.serrano@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Silva', 'Piloto', '555-1300', 'carlos.silva@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raquel', 'Lopez', 'Azafata', '555-1301', 'raquel.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Felipe', 'Martínez', 'Piloto', '555-1302', 'felipe.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Eva', 'González', 'Azafata', '555-1303', 'eva.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Daniel', 'Hernández', 'Piloto', '555-1304', 'daniel.hernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Cristina', 'Ramírez', 'Azafata', '555-1305', 'cristina.ramirez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Martínez', 'Piloto', '555-1306', 'jose.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'Pérez', 'Azafata', '555-1307', 'luis.perez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Serrano', 'Piloto', '555-1308', 'antonio.serrano@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Juan', 'Vázquez', 'Azafata', '555-1309', 'juan.vazquez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('María', 'Sánchez', 'Piloto', '555-1310', 'maria.sanchez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Adrián', 'Alvarez', 'Azafata', '555-1311', 'adrian.alvarez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ana', 'Lopez', 'Piloto', '555-1312', 'ana.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Rosa', 'García', 'Azafata', '555-1313', 'rosa.garcia@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Vicente', 'Fernández', 'Piloto', '555-1314', 'vicente.fernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Mendoza', 'Piloto', '555-1315', 'carlos.mendoza@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Gabriela', 'Cordero', 'Azafata', '555-1316', 'gabriela.cordero@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'Torres', 'Piloto', '555-1317', 'luis.torres@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sandra', 'Hernández', 'Azafata', '555-1318', 'sandra.hernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raúl', 'Sánchez', 'Piloto', '555-1319', 'raul.sanchez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Paola', 'González', 'Azafata', '555-1320', 'paola.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Esteban', 'López', 'Piloto', '555-1321', 'esteban.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('María', 'Salazar', 'Azafata', '555-1322', 'maria.salazar@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Rodríguez', 'Piloto', '555-1323', 'carlos.rodriguez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Silvia', 'Jiménez', 'Azafata', '555-1324', 'silvia.jimenez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Javier', 'Fernández', 'Piloto', '555-1325', 'javier.fernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Pablo', 'Morales', 'Azafata', '555-1326', 'pablo.morales@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Patricia', 'Serrano', 'Piloto', '555-1327', 'patricia.serrano@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Rafael', 'García', 'Azafata', '555-1328', 'rafael.garcia@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'Martínez', 'Piloto', '555-1329', 'isabel.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Cordero', 'Azafata', '555-1330', 'jose.cordero@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Eduardo', 'Alvarado', 'Piloto', '555-1331', 'eduardo.alvarado@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lidia', 'Pérez', 'Azafata', '555-1332', 'lidia.perez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Manuel', 'Vázquez', 'Piloto', '555-1333', 'manuel.vazquez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Marta', 'Ramírez', 'Azafata', '555-1334', 'marta.ramirez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Julio', 'Hernández', 'Piloto', '555-1335', 'julio.hernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carmen', 'Jiménez', 'Azafata', '555-1336', 'carmen.jimenez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Andrés', 'Morales', 'Piloto', '555-1337', 'andres.morales@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sonia', 'Silva', 'Azafata', '555-1338', 'sonia.silva@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Pedro', 'González', 'Piloto', '555-1339', 'pedro.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lucía', 'Lozano', 'Azafata', '555-1340', 'lucia.lozano@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Joaquín', 'Pérez', 'Piloto', '555-1341', 'joaquin.perez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raúl', 'García', 'Azafata', '555-1342', 'raul.garcia@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Patricia', 'Jiménez', 'Piloto', '555-1343', 'patricia.jimenez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Rodríguez', 'Azafata', '555-1344', 'ricardo.rodriguez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Iván', 'Torres', 'Piloto', '555-1345', 'ivan.torres@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Alma', 'Fernández', 'Azafata', '555-1346', 'alma.fernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Ramírez', 'Piloto', '555-1347', 'jose.ramirez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Monica', 'Sánchez', 'Azafata', '555-1348', 'monica.sanchez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Silva', 'Piloto', '555-1349', 'antonio.silva@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'Lopez', 'Azafata', '555-1350', 'luis.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'Martínez', 'Piloto', '555-1351', 'isabel.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('David', 'López', 'Piloto', '555-1352', 'david.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ana', 'Córdoba', 'Azafata', '555-1353', 'ana.cordoba@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Eduardo', 'Martínez', 'Piloto', '555-1354', 'eduardo.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raquel', 'Fernández', 'Azafata', '555-1355', 'raquel.fernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Joaquín', 'González', 'Piloto', '555-1356', 'joaquin.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lucía', 'Martínez', 'Azafata', '555-1357', 'lucia.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Sánchez', 'Piloto', '555-1358', 'carlos.sanchez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Mónica', 'Ramírez', 'Azafata', '555-1359', 'monica.ramirez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Gómez', 'Piloto', '555-1360', 'jose.gomez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Verónica', 'Hernández', 'Azafata', '555-1361', 'veronica.hernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Andrés', 'Pérez', 'Piloto', '555-1362', 'andres.perez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Berta', 'López', 'Azafata', '555-1363', 'berta.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Jiménez', 'Piloto', '555-1364', 'jose.jimenez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Margarita', 'García', 'Azafata', '555-1365', 'margarita.garcia@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Sánchez', 'Piloto', '555-1366', 'ricardo.sanchez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Claudia', 'Alonso', 'Azafata', '555-1367', 'claudia.alonso@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Ramírez', 'Piloto', '555-1368', 'antonio.ramirez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Patricia', 'Gómez', 'Azafata', '555-1369', 'patricia.gomez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Juan', 'Cordero', 'Piloto', '555-1370', 'juan.cordero@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Teresa', 'Silva', 'Azafata', '555-1371', 'teresa.silva@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Fernando', 'Vázquez', 'Piloto', '555-1372', 'fernando.vazquez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Liliana', 'González', 'Azafata', '555-1373', 'liliana.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Alberto', 'Martínez', 'Piloto', '555-1374', 'alberto.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Inés', 'Pérez', 'Azafata', '555-1375', 'ines.perez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Fernando', 'López', 'Piloto', '555-1376', 'fernando.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'Jiménez', 'Azafata', '555-1377', 'isabel.jimenez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Martín', 'Hernández', 'Piloto', '555-1378', 'martin.hernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Verónica', 'Rodríguez', 'Azafata', '555-1379', 'veronica.rodriguez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('David', 'Vázquez', 'Piloto', '555-1380', 'david.vazquez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sonia', 'López', 'Azafata', '555-1381', 'sonia.lopez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'González', 'Piloto', '555-1382', 'carlos.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lina', 'Hernández', 'Azafata', '555-1383', 'lina.hernandez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Javier', 'Morales', 'Piloto', '555-1384', 'javier.morales@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raquel', 'Alvarado', 'Azafata', '555-1385', 'raquel.alvarado@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ramón', 'Salazar', 'Piloto', '555-1386', 'ramon.salazar@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Pilar', 'García', 'Azafata', '555-1387', 'pilar.garcia@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Martínez', 'Piloto', '555-1388', 'antonio.martinez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carmen', 'Rodríguez', 'Azafata', '555-1389', 'carmen.rodriguez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'González', 'Piloto', '555-1390', 'luis.gonzalez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Eva', 'Silva', 'Azafata', '555-1391', 'eva.silva@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Gómez', 'Piloto', '555-1392', 'antonio.gomez@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Berta', 'Alvarado', 'Azafata', '555-1393', 'berta.alvarado@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Adrián', 'Torres', 'Piloto', '555-1394', 'adrian.torres@aerolinea.com');
+INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Natalia', 'Morales', 'Azafata', '555-1395', 'natalia.morales@aerolinea.com');
+
+-- Operaciones CRUD para la tabla Empleados
+SELECT * FROM TBL_Empleados;
+
+SELECT * FROM TBL_Empleados
+WHERE Cargo = 'Piloto';
+
+UPDATE TBL_Empleados
+SET Telefono = '555-9999'
+WHERE Nombre = 'Carlos' AND Apellido = 'Ramirez';
+
+DELETE FROM TBL_Empleados
+WHERE Nombre = 'Ana' AND Apellido = 'Gomez';
+
+-- Inserts de la tabla: Hoteles
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Mar Azul', 'Playa del Carmen, México', '5 Estrellas', 200.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Paraíso', 'Cancún, México', '4 Estrellas', 150.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Grand Resort', 'Bavaro, República Dominicana', '5 Estrellas', 300.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Sol y Mar', 'Puerto Vallarta, México', '3 Estrellas', 120.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palace Suites', 'Miami, USA', '4 Estrellas', 180.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine Hotel', 'Cartagena, Colombia', '3 Estrellas', 100.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Palm Hotel', 'Punta Cana, República Dominicana', '5 Estrellas', 350.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Mirage', 'Las Vegas, USA', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('The Grand', 'Orlando, USA', '5 Estrellas', 250.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze', 'Cozumel, México', '4 Estrellas', 170.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Mountain View', 'Asheville, USA', '3 Estrellas', 90.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Seaside Resort', 'Boca Chica, República Dominicana', '5 Estrellas', 320.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Hotel', 'Acapulco, México', '3 Estrellas', 110.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Sands', 'Varadero, Cuba', '4 Estrellas', 180.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Luxury Suites', 'Buenos Aires, Argentina', '5 Estrellas', 400.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Suites', 'Tulum, México', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Blue Bay', 'Cartagena, Colombia', '3 Estrellas', 95.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Mayan Palace', 'Riviera Maya, México', '5 Estrellas', 370.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Resort', 'Roatán, Honduras', '4 Estrellas', 160.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palm Beach Resort', 'Barbados', '5 Estrellas', 280.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Paradise', 'Puerto Rico', '4 Estrellas', 190.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Inn', 'Tulum, México', '3 Estrellas', 85.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Palace', 'Miami, USA', '5 Estrellas', 320.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Villa Serena', 'Boca Chica, República Dominicana', '4 Estrellas', 160.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Laguna Resort', 'Cozumel, México', '5 Estrellas', 310.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Grand Ocean View', 'Varadero, Cuba', '4 Estrellas', 190.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Sky Resort', 'Puerto Vallarta, México', '3 Estrellas', 120.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oceanfront Hotel', 'Bavaro, República Dominicana', '5 Estrellas', 330.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Mountain Escape', 'Asheville, USA', '4 Estrellas', 200.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Bay Hotel', 'Cancún, México', '5 Estrellas', 260.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Breeze', 'Tulum, México', '4 Estrellas', 180.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Serenity Hotel', 'Cartagena, Colombia', '3 Estrellas', 95.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista Mar', 'Puerto Rico', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachcomber Resort', 'Las Vegas, USA', '5 Estrellas', 320.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Skyline Inn', 'Punta Cana, República Dominicana', '3 Estrellas', 110.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Paradise', 'Boca Chica, República Dominicana', '5 Estrellas', 350.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Grand Riviera', 'Riviera Maya, México', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Resort', 'Cozumel, México', '3 Estrellas', 130.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Marina Suites', 'Puerto Vallarta, México', '5 Estrellas', 310.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Azure Bay', 'Playa del Carmen, México', '5 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Cove', 'Cancún, México', '4 Estrellas', 200.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Reef Hotel', 'Punta Cana, República Dominicana', '5 Estrellas', 330.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Riviera Beach Resort', 'Puerto Vallarta, México', '4 Estrellas', 160.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oasis Retreat', 'Barbados', '3 Estrellas', 120.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Beach', 'Varadero, Cuba', '5 Estrellas', 340.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Pacific Suites', 'Los Ángeles, USA', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Lagoon Resort', 'Tulum, México', '3 Estrellas', 110.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Escape', 'Cartagena, Colombia', '4 Estrellas', 180.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachside Haven', 'Cozumel, México', '5 Estrellas', 330.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Waters', 'Bavaro, República Dominicana', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Mango Bay Resort', 'Roatán, Honduras', '5 Estrellas', 300.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coco Beach Hotel', 'Miami, USA', '3 Estrellas', 120.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Shores', 'Cancún, México', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palm Bay Hotel', 'Riviera Maya, México', '3 Estrellas', 150.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Elite Suites', 'Las Vegas, USA', '5 Estrellas', 400.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Casa Blanca', 'Tulum, México', '4 Estrellas', 170.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunrise Resort', 'Puerto Rico', '3 Estrellas', 140.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Horizon Inn', 'Asheville, USA', '4 Estrellas', 190.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sea Breeze Suites', 'Varadero, Cuba', '5 Estrellas', 360.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Oasis', 'Barbados', '3 Estrellas', 130.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Grand Lagoon', 'Punta Cana, República Dominicana', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Majestic Towers', 'Puerto Vallarta, México', '5 Estrellas', 380.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Luxe Beach Resort', 'Cozumel, México', '4 Estrellas', 190.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine Bay', 'Cartagena, Colombia', '5 Estrellas', 350.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Beachfront', 'Las Vegas, USA', '3 Estrellas', 150.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Pacific Coast Inn', 'Miami, USA', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Cabo View', 'Baja California, México', '5 Estrellas', 390.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Skyline Resort', 'Cozumel, México', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze Suites', 'Varadero, Cuba', '3 Estrellas', 130.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista Marina', 'Boca Chica, República Dominicana', '4 Estrellas', 160.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Lagoon', 'Tulum, México', '5 Estrellas', 320.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Vista', 'Puerto Rico', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Emerald Bay Hotel', 'Las Vegas, USA', '3 Estrellas', 120.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Paradise', 'Cancún, México', '5 Estrellas', 350.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palms Resort', 'Bavaro, República Dominicana', '4 Estrellas', 200.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista Caribe', 'Boca Chica, República Dominicana', '5 Estrellas', 330.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Palace', 'Bavaro, República Dominicana', '3 Estrellas', 140.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Seaside Hotel', 'Cancún, México', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palm Springs Resort', 'Tulum, México', '5 Estrellas', 360.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Marina Bay Resort', 'Puerto Vallarta, México', '4 Estrellas', 250.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Laguna Azul', 'Riviera Maya, México', '5 Estrellas', 370.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Paradise Beach', 'Las Vegas, USA', '3 Estrellas', 150.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Oasis', 'Barbados', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Silver Sands Resort', 'Varadero, Cuba', '5 Estrellas', 340.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Island Breeze', 'Bavaro, República Dominicana', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean View Suites', 'Cozumel, México', '5 Estrellas', 380.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palm Bay Beach Resort', 'Miami, USA', '3 Estrellas', 160.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Beachfront', 'Puerto Rico', '5 Estrellas', 390.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista del Mar', 'Cabo San Lucas, México', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Coast Resort', 'Cozumel, México', '5 Estrellas', 400.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Dreams Bay', 'Cartagena, Colombia', '3 Estrellas', 140.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Waters Inn', 'Las Vegas, USA', '4 Estrellas', 250.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine Cove', 'Boca Chica, República Dominicana', '5 Estrellas', 360.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Reef Resort', 'Tulum, México', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Villas', 'Puerto Vallarta, México', '5 Estrellas', 420.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oasis Paradise', 'Cancún, México', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Caribbean Breeze Hotel', 'Varadero, Cuba', '3 Estrellas', 160.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Majestic Palm Resort', 'Barbados', '5 Estrellas', 370.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sea Cliff Hotel', 'Punta Cana, República Dominicana', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Laguna Grande', 'Puerto Rico', '3 Estrellas', 140.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Sun Resort', 'Las Vegas, USA', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Point', 'Cancún, México', '5 Estrellas', 380.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Sunset', 'Bavaro, República Dominicana', '3 Estrellas', 170.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Beach Suites', 'Cartagena, Colombia', '5 Estrellas', 350.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oceanview Resort', 'Cozumel, México', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine Bay Resort', 'Punta Cana, República Dominicana', '5 Estrellas', 400.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Coast Villas', 'Miami, USA', '3 Estrellas', 150.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oasis Grande', 'Boca Chica, República Dominicana', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Bliss', 'Riviera Maya, México', '5 Estrellas', 380.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Skyline Resort', 'Cancún, México', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista Mar', 'Tulum, México', '5 Estrellas', 350.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Bay Resort', 'Las Vegas, USA', '3 Estrellas', 160.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical View Hotel', 'Bavaro, República Dominicana', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze Resort', 'Puerto Rico', '5 Estrellas', 370.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palms Bay Resort', 'Varadero, Cuba', '3 Estrellas', 140.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Lagoon', 'Cabo San Lucas, México', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('El Dorado Beach Resort', 'Puerto Vallarta, México', '5 Estrellas', 420.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Mountain View Lodge', 'Sedona, USA', '4 Estrellas', 250.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sea Breeze Inn', 'Barbados', '3 Estrellas', 180.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Sun Resort', 'Cancún, México', '5 Estrellas', 410.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coastal Retreat', 'Riviera Maya, México', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Breeze Bay Hotel', 'Varadero, Cuba', '3 Estrellas', 160.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Lagoon Resort', 'Cozumel, México', '5 Estrellas', 420.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('The Island Retreat', 'Las Vegas, USA', '4 Estrellas', 240.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Starfish Bay', 'Tulum, México', '5 Estrellas', 390.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Beach Club', 'Punta Cana, República Dominicana', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Paradise Resort', 'Cabo San Lucas, México', '3 Estrellas', 150.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Seaside Haven', 'Cartagena, Colombia', '5 Estrellas', 380.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze Inn', 'Boca Chica, República Dominicana', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Villas', 'Varadero, Cuba', '5 Estrellas', 360.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine Beach Resort', 'Riviera Maya, México', '3 Estrellas', 170.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Lagoon Resort', 'Punta Cana, República Dominicana', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Springs Hotel', 'Cancún, México', '5 Estrellas', 420.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Sands Hotel', 'Miami, USA', '3 Estrellas', 180.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Beach Resort', 'Cozumel, México', '4 Estrellas', 240.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Cove Resort', 'Barbados', '5 Estrellas', 380.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Bay Villas', 'Tulum, México', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Majestic Sun Hotel', 'Cabo San Lucas, México', '5 Estrellas', 400.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Waters Inn', 'Las Vegas, USA', '3 Estrellas', 160.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Caribbean Sky Resort', 'Puerto Rico', '5 Estrellas', 420.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunrise Oasis', 'Boca Chica, República Dominicana', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Luxury Bay Resort', 'Cartagena, Colombia', '5 Estrellas', 390.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista Bonita Resort', 'Puerto Vallarta, México', '3 Estrellas', 150.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Heights Resort', 'Bavaro, República Dominicana', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Laguna Azul Beach', 'Riviera Maya, México', '5 Estrellas', 400.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Majestic Lagoon Resort', 'Cancún, México', '4 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Star Bay Resort', 'Cozumel, México', '5 Estrellas', 390.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean View Hotel', 'Las Vegas, USA', '3 Estrellas', 170.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Sands Beach Resort', 'Varadero, Cuba', '4 Estrellas', 240.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Breeze Point Resort', 'Tulum, México', '5 Estrellas', 380.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oceanic View Resort', 'Punta Cana, República Dominicana', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Ridge Resort', 'Puerto Vallarta, México', '3 Estrellas', 180.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Marina Beach Resort', 'Cancún, México', '5 Estrellas', 450.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Coast Hotel', 'Punta Cana, República Dominicana', '4 Estrellas', 250.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Gardens Inn', 'Cartagena, Colombia', '3 Estrellas', 190.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine View Resort', 'Boca Chica, República Dominicana', '5 Estrellas', 420.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Reef Hotel', 'Barbados', '4 Estrellas', 240.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Breeze Resort', 'Las Vegas, USA', '3 Estrellas', 160.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Seaside Escape Resort', 'Cozumel, México', '5 Estrellas', 430.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Coral Beach Resort', 'Riviera Maya, México', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Waters Resort', 'Tulum, México', '5 Estrellas', 410.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Villas', 'Cancún, México', '3 Estrellas', 200.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunrise Bay Resort', 'Miami, USA', '4 Estrellas', 250.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Oasis Hotel', 'Puerto Vallarta, México', '5 Estrellas', 450.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze Villas', 'Varadero, Cuba', '4 Estrellas', 220.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palm Shores Resort', 'Punta Cana, República Dominicana', '5 Estrellas', 420.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Seaview Palace Hotel', 'Cabo San Lucas, México', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Paradise Resort', 'Punta Cana, República Dominicana', '3 Estrellas', 190.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Sands Beach Hotel', 'Barbados', '5 Estrellas', 400.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Horizon Resort', 'Tulum, México', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coastal View Inn', 'Varadero, Cuba', '3 Estrellas', 180.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('The Waterfront Resort', 'Riviera Maya, México', '5 Estrellas', 460.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Bay Hotel', 'Cabo San Lucas, México', '4 Estrellas', 250.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Luxury Ocean View Resort', 'Las Vegas, USA', '5 Estrellas', 430.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Caribbean Blue Resort', 'Cartagena, Colombia', '3 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Reef Inn', 'Punta Cana, República Dominicana', '4 Estrellas', 240.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oceanfront Villas', 'Cozumel, México', '5 Estrellas', 450.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Horizon Resort', 'Miami, USA', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Bay Hotel', 'Cancún, México', '3 Estrellas', 180.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Palace Resort', 'Las Vegas, USA', '5 Estrellas', 470.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunrise Lagoon Resort', 'Boca Chica, República Dominicana', '4 Estrellas', 230.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Coastal Resort', 'Cabo San Lucas, México', '5 Estrellas', 440.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachside Escape Resort', 'Punta Cana, República Dominicana', '3 Estrellas', 210.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Paradise Resort', 'Cartagena, Colombia', '5 Estrellas', 450.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Bay Hotel', 'Varadero, Cuba', '4 Estrellas', 240.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze Resort', 'Tulum, México', '3 Estrellas', 200.00);
+INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Caribbean Ocean Resort', 'Puerto Vallarta, México', '5 Estrellas', 480.00);
+
+-- Operaciones CRUD para la tabla Hoteles 
+SELECT * FROM TBL_Hoteles;
+
+SELECT * FROM TBL_Hoteles
+WHERE Categoria = '5 Estrellas';
+
+SELECT * FROM TBL_Hoteles
+WHERE Precio_Noche > 200;
+
+UPDATE TBL_Hoteles
+SET Precio_Noche = 250.00
+WHERE Nombre = 'Hotel Mar Azul';
+
+DELETE FROM TBL_Hoteles
+WHERE Nombre = 'Hotel Sol y Mar';
+
+-- Inserts de la Tabla: Vuelos
 INSERT INTO TBL_Vuelos (Aerolinea, Origen, Destino, Fecha_Salida, Fecha_Llegada, Precio) 
 VALUES ('Delta Airlines', 'New York', 'Los Angeles', TO_DATE('2024-12-20', 'YYYY-MM-DD'), TO_DATE('2024-12-20', 'YYYY-MM-DD'), 350.50);
 
@@ -918,7 +1296,7 @@ VALUES ('Iberia', 'Lisboa', 'Valencia', TO_DATE('2025-04-21', 'YYYY-MM-DD'), TO_
 INSERT INTO TBL_Vuelos (Aerolinea, Origen, Destino, Fecha_Salida, Fecha_Llegada, Precio)
 VALUES ('Air Europa', 'Barcelona', 'Palma de Mallorca', TO_DATE('2025-04-22', 'YYYY-MM-DD'), TO_DATE('2025-04-22', 'YYYY-MM-DD'), 140.00);
 
--- Operaciones CRUD de VUELOS
+-- Operaciones CRUD para la tabla Vuelos
 SELECT * FROM TBL_Vuelos;
 
 SELECT * FROM TBL_Vuelos
@@ -934,213 +1312,8 @@ WHERE Aerolinea = 'Delta Airlines' AND Origen = 'New York' AND Destino = 'Los An
 DELETE FROM TBL_Vuelos
 WHERE Precio < 150;
 
--- Inserción de datos en la tabla: HOTELES
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Mar Azul', 'Playa del Carmen, México', '5 Estrellas', 200.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Paraíso', 'Cancún, México', '4 Estrellas', 150.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Grand Resort', 'Bavaro, República Dominicana', '5 Estrellas', 300.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Sol y Mar', 'Puerto Vallarta, México', '3 Estrellas', 120.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palace Suites', 'Miami, USA', '4 Estrellas', 180.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine Hotel', 'Cartagena, Colombia', '3 Estrellas', 100.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Palm Hotel', 'Punta Cana, República Dominicana', '5 Estrellas', 350.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Mirage', 'Las Vegas, USA', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('The Grand', 'Orlando, USA', '5 Estrellas', 250.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze', 'Cozumel, México', '4 Estrellas', 170.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Mountain View', 'Asheville, USA', '3 Estrellas', 90.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Seaside Resort', 'Boca Chica, República Dominicana', '5 Estrellas', 320.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Hotel', 'Acapulco, México', '3 Estrellas', 110.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Sands', 'Varadero, Cuba', '4 Estrellas', 180.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Luxury Suites', 'Buenos Aires, Argentina', '5 Estrellas', 400.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Suites', 'Tulum, México', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Blue Bay', 'Cartagena, Colombia', '3 Estrellas', 95.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Mayan Palace', 'Riviera Maya, México', '5 Estrellas', 370.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Resort', 'Roatán, Honduras', '4 Estrellas', 160.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palm Beach Resort', 'Barbados', '5 Estrellas', 280.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Paradise', 'Puerto Rico', '4 Estrellas', 190.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Inn', 'Tulum, México', '3 Estrellas', 85.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Palace', 'Miami, USA', '5 Estrellas', 320.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Villa Serena', 'Boca Chica, República Dominicana', '4 Estrellas', 160.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Laguna Resort', 'Cozumel, México', '5 Estrellas', 310.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Grand Ocean View', 'Varadero, Cuba', '4 Estrellas', 190.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Sky Resort', 'Puerto Vallarta, México', '3 Estrellas', 120.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oceanfront Hotel', 'Bavaro, República Dominicana', '5 Estrellas', 330.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Mountain Escape', 'Asheville, USA', '4 Estrellas', 200.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Bay Hotel', 'Cancún, México', '5 Estrellas', 260.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Breeze', 'Tulum, México', '4 Estrellas', 180.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Serenity Hotel', 'Cartagena, Colombia', '3 Estrellas', 95.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista Mar', 'Puerto Rico', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachcomber Resort', 'Las Vegas, USA', '5 Estrellas', 320.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Skyline Inn', 'Punta Cana, República Dominicana', '3 Estrellas', 110.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Paradise', 'Boca Chica, República Dominicana', '5 Estrellas', 350.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Grand Riviera', 'Riviera Maya, México', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Resort', 'Cozumel, México', '3 Estrellas', 130.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Marina Suites', 'Puerto Vallarta, México', '5 Estrellas', 310.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Azure Bay', 'Playa del Carmen, México', '5 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Cove', 'Cancún, México', '4 Estrellas', 200.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Reef Hotel', 'Punta Cana, República Dominicana', '5 Estrellas', 330.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Riviera Beach Resort', 'Puerto Vallarta, México', '4 Estrellas', 160.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oasis Retreat', 'Barbados', '3 Estrellas', 120.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Beach', 'Varadero, Cuba', '5 Estrellas', 340.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Pacific Suites', 'Los Ángeles, USA', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Lagoon Resort', 'Tulum, México', '3 Estrellas', 110.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Escape', 'Cartagena, Colombia', '4 Estrellas', 180.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachside Haven', 'Cozumel, México', '5 Estrellas', 330.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Waters', 'Bavaro, República Dominicana', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Mango Bay Resort', 'Roatán, Honduras', '5 Estrellas', 300.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coco Beach Hotel', 'Miami, USA', '3 Estrellas', 120.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Shores', 'Cancún, México', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palm Bay Hotel', 'Riviera Maya, México', '3 Estrellas', 150.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Elite Suites', 'Las Vegas, USA', '5 Estrellas', 400.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Casa Blanca', 'Tulum, México', '4 Estrellas', 170.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunrise Resort', 'Puerto Rico', '3 Estrellas', 140.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Horizon Inn', 'Asheville, USA', '4 Estrellas', 190.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sea Breeze Suites', 'Varadero, Cuba', '5 Estrellas', 360.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Oasis', 'Barbados', '3 Estrellas', 130.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Grand Lagoon', 'Punta Cana, República Dominicana', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Majestic Towers', 'Puerto Vallarta, México', '5 Estrellas', 380.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Luxe Beach Resort', 'Cozumel, México', '4 Estrellas', 190.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine Bay', 'Cartagena, Colombia', '5 Estrellas', 350.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Beachfront', 'Las Vegas, USA', '3 Estrellas', 150.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Pacific Coast Inn', 'Miami, USA', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Cabo View', 'Baja California, México', '5 Estrellas', 390.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Skyline Resort', 'Cozumel, México', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze Suites', 'Varadero, Cuba', '3 Estrellas', 130.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista Marina', 'Boca Chica, República Dominicana', '4 Estrellas', 160.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Lagoon', 'Tulum, México', '5 Estrellas', 320.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Vista', 'Puerto Rico', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Emerald Bay Hotel', 'Las Vegas, USA', '3 Estrellas', 120.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Paradise', 'Cancún, México', '5 Estrellas', 350.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palms Resort', 'Bavaro, República Dominicana', '4 Estrellas', 200.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista Caribe', 'Boca Chica, República Dominicana', '5 Estrellas', 330.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Palace', 'Bavaro, República Dominicana', '3 Estrellas', 140.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Seaside Hotel', 'Cancún, México', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palm Springs Resort', 'Tulum, México', '5 Estrellas', 360.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Marina Bay Resort', 'Puerto Vallarta, México', '4 Estrellas', 250.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Laguna Azul', 'Riviera Maya, México', '5 Estrellas', 370.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Paradise Beach', 'Las Vegas, USA', '3 Estrellas', 150.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Oasis', 'Barbados', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Silver Sands Resort', 'Varadero, Cuba', '5 Estrellas', 340.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Island Breeze', 'Bavaro, República Dominicana', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean View Suites', 'Cozumel, México', '5 Estrellas', 380.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palm Bay Beach Resort', 'Miami, USA', '3 Estrellas', 160.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Beachfront', 'Puerto Rico', '5 Estrellas', 390.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista del Mar', 'Cabo San Lucas, México', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Coast Resort', 'Cozumel, México', '5 Estrellas', 400.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Dreams Bay', 'Cartagena, Colombia', '3 Estrellas', 140.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Waters Inn', 'Las Vegas, USA', '4 Estrellas', 250.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine Cove', 'Boca Chica, República Dominicana', '5 Estrellas', 360.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Reef Resort', 'Tulum, México', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Villas', 'Puerto Vallarta, México', '5 Estrellas', 420.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oasis Paradise', 'Cancún, México', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Caribbean Breeze Hotel', 'Varadero, Cuba', '3 Estrellas', 160.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Majestic Palm Resort', 'Barbados', '5 Estrellas', 370.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sea Cliff Hotel', 'Punta Cana, República Dominicana', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Laguna Grande', 'Puerto Rico', '3 Estrellas', 140.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Sun Resort', 'Las Vegas, USA', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Point', 'Cancún, México', '5 Estrellas', 380.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Sunset', 'Bavaro, República Dominicana', '3 Estrellas', 170.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Beach Suites', 'Cartagena, Colombia', '5 Estrellas', 350.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oceanview Resort', 'Cozumel, México', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine Bay Resort', 'Punta Cana, República Dominicana', '5 Estrellas', 400.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Coast Villas', 'Miami, USA', '3 Estrellas', 150.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oasis Grande', 'Boca Chica, República Dominicana', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Bliss', 'Riviera Maya, México', '5 Estrellas', 380.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Skyline Resort', 'Cancún, México', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista Mar', 'Tulum, México', '5 Estrellas', 350.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Bay Resort', 'Las Vegas, USA', '3 Estrellas', 160.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical View Hotel', 'Bavaro, República Dominicana', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze Resort', 'Puerto Rico', '5 Estrellas', 370.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palms Bay Resort', 'Varadero, Cuba', '3 Estrellas', 140.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Lagoon', 'Cabo San Lucas, México', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('El Dorado Beach Resort', 'Puerto Vallarta, México', '5 Estrellas', 420.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Mountain View Lodge', 'Sedona, USA', '4 Estrellas', 250.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sea Breeze Inn', 'Barbados', '3 Estrellas', 180.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Sun Resort', 'Cancún, México', '5 Estrellas', 410.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coastal Retreat', 'Riviera Maya, México', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Breeze Bay Hotel', 'Varadero, Cuba', '3 Estrellas', 160.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Lagoon Resort', 'Cozumel, México', '5 Estrellas', 420.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('The Island Retreat', 'Las Vegas, USA', '4 Estrellas', 240.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Starfish Bay', 'Tulum, México', '5 Estrellas', 390.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Beach Club', 'Punta Cana, República Dominicana', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Paradise Resort', 'Cabo San Lucas, México', '3 Estrellas', 150.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Seaside Haven', 'Cartagena, Colombia', '5 Estrellas', 380.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze Inn', 'Boca Chica, República Dominicana', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Villas', 'Varadero, Cuba', '5 Estrellas', 360.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine Beach Resort', 'Riviera Maya, México', '3 Estrellas', 170.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Lagoon Resort', 'Punta Cana, República Dominicana', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Springs Hotel', 'Cancún, México', '5 Estrellas', 420.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Sands Hotel', 'Miami, USA', '3 Estrellas', 180.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Beach Resort', 'Cozumel, México', '4 Estrellas', 240.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Cove Resort', 'Barbados', '5 Estrellas', 380.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Bay Villas', 'Tulum, México', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Majestic Sun Hotel', 'Cabo San Lucas, México', '5 Estrellas', 400.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Waters Inn', 'Las Vegas, USA', '3 Estrellas', 160.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Caribbean Sky Resort', 'Puerto Rico', '5 Estrellas', 420.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunrise Oasis', 'Boca Chica, República Dominicana', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Luxury Bay Resort', 'Cartagena, Colombia', '5 Estrellas', 390.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Vista Bonita Resort', 'Puerto Vallarta, México', '3 Estrellas', 150.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Heights Resort', 'Bavaro, República Dominicana', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Laguna Azul Beach', 'Riviera Maya, México', '5 Estrellas', 400.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Majestic Lagoon Resort', 'Cancún, México', '4 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Star Bay Resort', 'Cozumel, México', '5 Estrellas', 390.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean View Hotel', 'Las Vegas, USA', '3 Estrellas', 170.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Sands Beach Resort', 'Varadero, Cuba', '4 Estrellas', 240.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Breeze Point Resort', 'Tulum, México', '5 Estrellas', 380.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oceanic View Resort', 'Punta Cana, República Dominicana', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Ridge Resort', 'Puerto Vallarta, México', '3 Estrellas', 180.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Marina Beach Resort', 'Cancún, México', '5 Estrellas', 450.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Coast Hotel', 'Punta Cana, República Dominicana', '4 Estrellas', 250.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Gardens Inn', 'Cartagena, Colombia', '3 Estrellas', 190.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunshine View Resort', 'Boca Chica, República Dominicana', '5 Estrellas', 420.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Reef Hotel', 'Barbados', '4 Estrellas', 240.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Breeze Resort', 'Las Vegas, USA', '3 Estrellas', 160.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Seaside Escape Resort', 'Cozumel, México', '5 Estrellas', 430.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Coral Beach Resort', 'Riviera Maya, México', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Crystal Waters Resort', 'Tulum, México', '5 Estrellas', 410.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Villas', 'Cancún, México', '3 Estrellas', 200.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunrise Bay Resort', 'Miami, USA', '4 Estrellas', 250.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Oasis Hotel', 'Puerto Vallarta, México', '5 Estrellas', 450.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze Villas', 'Varadero, Cuba', '4 Estrellas', 220.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Palm Shores Resort', 'Punta Cana, República Dominicana', '5 Estrellas', 420.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Seaview Palace Hotel', 'Cabo San Lucas, México', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Paradise Resort', 'Punta Cana, República Dominicana', '3 Estrellas', 190.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Sands Beach Hotel', 'Barbados', '5 Estrellas', 400.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Blue Horizon Resort', 'Tulum, México', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coastal View Inn', 'Varadero, Cuba', '3 Estrellas', 180.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('The Waterfront Resort', 'Riviera Maya, México', '5 Estrellas', 460.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Bay Hotel', 'Cabo San Lucas, México', '4 Estrellas', 250.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Luxury Ocean View Resort', 'Las Vegas, USA', '5 Estrellas', 430.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Caribbean Blue Resort', 'Cartagena, Colombia', '3 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Golden Reef Inn', 'Punta Cana, República Dominicana', '4 Estrellas', 240.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Oceanfront Villas', 'Cozumel, México', '5 Estrellas', 450.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachfront Horizon Resort', 'Miami, USA', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Coral Bay Hotel', 'Cancún, México', '3 Estrellas', 180.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Lagoon Palace Resort', 'Las Vegas, USA', '5 Estrellas', 470.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunrise Lagoon Resort', 'Boca Chica, República Dominicana', '4 Estrellas', 230.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Royal Coastal Resort', 'Cabo San Lucas, México', '5 Estrellas', 440.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Beachside Escape Resort', 'Punta Cana, República Dominicana', '3 Estrellas', 210.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Sunset Paradise Resort', 'Cartagena, Colombia', '5 Estrellas', 450.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tropical Bay Hotel', 'Varadero, Cuba', '4 Estrellas', 240.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze Resort', 'Tulum, México', '3 Estrellas', 200.00);
-INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Caribbean Ocean Resort', 'Puerto Vallarta, México', '5 Estrellas', 480.00);
 
--- Operaciones CRUD de HOTELES 
-
-SELECT * FROM TBL_Hoteles;
-
-SELECT * FROM TBL_Hoteles
-WHERE Categoria = '5 Estrellas';
-
-SELECT * FROM TBL_Hoteles
-WHERE Precio_Noche > 200;
-
-UPDATE TBL_Hoteles
-SET Precio_Noche = 250.00
-WHERE Nombre = 'Hotel Mar Azul';
-
-DELETE FROM TBL_Hoteles
-WHERE Nombre = 'Hotel Sol y Mar';
-
--- Inserción de datos en la tabla: TOURS
+-- Inserts de la tabla: Tours
 INSERT INTO TBL_Tours (Nombre, Descripcion, Duracion, Precio) 
 VALUES ('Tour por las Pirámides de Egipto', 'Explora las pirámides de Giza, la Esfinge y el Museo Egipcio con un guía experto.', 8, 150.00);
 
@@ -1714,7 +1887,7 @@ VALUES ('Exploración de las selvas de Borneo', 'Descubre orangutanes y biodivers
 INSERT INTO TBL_Tours (Nombre, Descripcion, Duracion, Precio) 
 VALUES ('Ruta por los campos de lavanda en Provenza', 'Disfruta de paisajes morados y fragantes en Francia.', 3, 150.00);
 
--- Operaciones CRUD de Tours
+-- Operaciones CRUD para la tabla: Tours
 SELECT * FROM TBL_Tours;
 
 SELECT * FROM TBL_Tours
@@ -1727,9 +1900,7 @@ WHERE Nombre = 'Tour por las Pirámides de Egipto';
 DELETE FROM TBL_Tours
 WHERE Nombre = 'Tour nocturno en Tokio';
 
--- Inserción de datos en la tabla: EMPLEADOS
-
--- Inserción de datos en la tabla: RESERVAS
+--Inserts de la tabla: Reserva 
 INSERT INTO TBL_Reservas (ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (1, 1, 2);
 INSERT INTO TBL_Reservas (ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (2, 2, 1);
 INSERT INTO TBL_Reservas (ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (3, 3, 4);
@@ -1950,7 +2121,7 @@ INSERT INTO TBL_Reservas (ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (198, 3, 22);
 INSERT INTO TBL_Reservas (ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (199, 4, 23);
 INSERT INTO TBL_Reservas (ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (200, 5, 24);
 
--- Inserción de datos en la tabla: PAGOS
+-- Inserts de la tabla: Pagos
 INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (150.00, TO_DATE('2024-01-05', 'YYYY-MM-DD'), 'Tarjeta de Crédito', 1);
 INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (200.00, TO_DATE('2024-01-06', 'YYYY-MM-DD'), 'PayPal', 2);
 INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (300.00, TO_DATE('2024-01-07', 'YYYY-MM-DD'), 'Tarjeta de Débito', 3);
@@ -2171,8 +2342,7 @@ INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (280.0
 INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (220.00, TO_DATE('2024-07-22', 'YYYY-MM-DD'), 'Tarjeta de Débito', 199);
 INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (370.00, TO_DATE('2024-07-23', 'YYYY-MM-DD'), 'Efectivo', 200);
 
--- Operaciones CRUD de PAGOS
-
+-- Operaciones CRUD para la tabla Pagos
 SELECT * FROM TBL_Pagos
 WHERE Metodo_Pago = 'Tarjeta de Crédito';
 
@@ -2187,7 +2357,8 @@ WHERE ID_Reserva = 6;
 DELETE FROM TBL_Pagos
 WHERE Fecha_Pago < '2024-01-09';
 
--- Inserción de datos en la tabla: RESERVAS/TOURS
+
+-- Inserts de la tabla: Reservas_Tours
 INSERT INTO TBL_Reservas_Tours (ID_Reserva, ID_Tour) VALUES (1, 5);
 INSERT INTO TBL_Reservas_Tours (ID_Reserva, ID_Tour) VALUES (2, 8);
 INSERT INTO TBL_Reservas_Tours (ID_Reserva, ID_Tour) VALUES (3, 12);
@@ -2408,223 +2579,12 @@ INSERT INTO TBL_Reservas_Tours (ID_Reserva, ID_Tour) VALUES (198, 23);
 INSERT INTO TBL_Reservas_Tours (ID_Reserva, ID_Tour) VALUES (199, 26);
 INSERT INTO TBL_Reservas_Tours (ID_Reserva, ID_Tour) VALUES (200, 29);
 
--- Inserción de datos en la tabla: EMPLEADOS
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Ramirez', 'Piloto', '555-1234', 'carlos.ramirez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ana', 'Gomez', 'Azafata', '555-5678', 'ana.gomez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'Martinez', 'Desarrollador de Sistemas', '555-9876', 'luis.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Maria', 'Lopez', 'Recepcionista', '555-1357', 'maria.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Pedro', 'Hernandez', 'Mecánico de Aviación', '555-2468', 'pedro.hernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Laura', 'Perez', 'Directora de Marketing', '555-3579', 'laura.perez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Javier', 'Diaz', 'Piloto', '555-4680', 'javier.diaz@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sofia', 'Garcia', 'Azafata', '555-5791', 'sofia.garcia@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Victor', 'Sanchez', 'Ingeniero de Aviones', '555-6802', 'victor.sanchez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Elena', 'Torres', 'Jefa de Atención al Cliente', '555-7913', 'elena.torres@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Jimenez', 'Cocinero de Aerolínea', '555-8024', 'ricardo.jimenez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Patricia', 'Ruiz', 'Diseñadora de Uniformes', '555-9135', 'patricia.ruiz@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Rafael', 'Moreno', 'Jefe de Mantenimiento', '555-0246', 'rafael.moreno@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Mariana', 'Vega', 'Gerente de Proyectos', '555-1358', 'mariana.vega@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Fernando', 'Romero', 'Técnico de Aviones', '555-2469', 'fernando.romero@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'Castillo', 'Analista de Rutas', '555-3570', 'isabel.castillo@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'Fernandez', 'Asistente de Aeropuerto', '555-4681', 'luis.fernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Angela', 'Mendez', 'Coordinadora de Vuelo', '555-5792', 'angela.mendez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Oscar', 'Silva', 'Piloto', '555-6803', 'oscar.silva@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Cristina', 'Rios', 'Azafata', '555-7914', 'cristina.rios@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sergio', 'Paredes', 'Controlador de Tráfico Aéreo', '555-8025', 'sergio.paredes@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Marta', 'Alvarez', 'Gerente de Finanzas', '555-9136', 'marta.alvarez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Gonzalez', 'Asistente de Vuelo', '555-0247', 'carlos.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Daniela', 'Serrano', 'Piloto', '555-1359', 'daniela.serrano@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Alberto', 'Rojas', 'Ingeniero de Aviones', '555-2460', 'alberto.rojas@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Jorge', 'Salazar', 'Jefe de Seguridad Aeroportuaria', '555-3571', 'jorge.salazar@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Susana', 'Campos', 'Gerente de Operaciones', '555-4682', 'susana.campos@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Francisco', 'Zuniga', 'Piloto', '555-5793', 'francisco.zuniga@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Vanessa', 'Pinto', 'Azafata', '555-6804', 'vanessa.pinto@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Martin', 'Castro', 'Coordinador de Logística', '555-7915', 'martin.castro@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Claudia', 'Guerrero', 'Gestor de Clientes', '555-8026', 'claudia.guerrero@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Joaquín', 'Cordero', 'Piloto', '555-9137', 'joaquin.cordero@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Eduardo', 'Muñoz', 'Director de Operaciones', '555-0248', 'eduardo.munoz@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raquel', 'Blanco', 'Azafata', '555-1350', 'raquel.blanco@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raul', 'Luna', 'Piloto', '555-2461', 'raul.luna@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Paula', 'Ruiz', 'Técnico de Mantenimiento', '555-3572', 'paula.ruiz@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Miguel', 'Vazquez', 'Coordinador de Vuelo', '555-4683', 'miguel.vazquez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Julia', 'Martinez', 'Jefa de Atención al Cliente', '555-5794', 'julia.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Gustavo', 'Herrera', 'Piloto', '555-6805', 'gustavo.herrera@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Nuria', 'López', 'Azafata', '555-7916', 'nuria.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Iván', 'Martinez', 'Piloto', '555-1239', 'ivan.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sandra', 'Vega', 'Azafata', '555-1240', 'sandra.vega@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Rodriguez', 'Técnico de Mantenimiento', '555-1241', 'carlos.rodriguez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Martín', 'Fernandez', 'Desarrollador de Sistemas', '555-1242', 'martin.fernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Alicia', 'Ramirez', 'Azafata', '555-1243', 'alicia.ramirez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Julio', 'Alonso', 'Piloto', '555-1244', 'julio.alonso@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Marta', 'Gonzalez', 'Coordinadora de Vuelo', '555-1245', 'marta.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Pérez', 'Piloto', '555-1246', 'carlos.perez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'Díaz', 'Azafata', '555-1247', 'isabel.diaz@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Gonzalez', 'Mecánico de Aviación', '555-1248', 'ricardo.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Paula', 'Silva', 'Azafata', '555-1249', 'paula.silva@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sergio', 'Lopez', 'Piloto', '555-1250', 'sergio.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Elena', 'Herrera', 'Jefa de Seguridad Aeroportuaria', '555-1251', 'elena.herrera@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Jorge', 'Moreno', 'Azafata', '555-1252', 'jorge.moreno@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ana', 'Fernandez', 'Coordinadora de Vuelo', '555-1253', 'ana.fernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('David', 'Sánchez', 'Piloto', '555-1254', 'david.sanchez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Claudia', 'García', 'Azafata', '555-1255', 'claudia.garcia@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Cristina', 'Rios', 'Ingeniero de Aviación', '555-1256', 'cristina.rios@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Andrés', 'Lozano', 'Piloto', '555-1257', 'andres.lozano@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Rafael', 'Morales', 'Azafata', '555-1258', 'rafael.morales@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lucas', 'Gonzalez', 'Jefe de Mantenimiento', '555-1259', 'lucas.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lorena', 'Serrano', 'Piloto', '555-1260', 'lorena.serrano@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raúl', 'Alvarez', 'Azafata', '555-1261', 'raul.alvarez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Daniel', 'Martínez', 'Jefe de Aeropuerto', '555-1262', 'daniel.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('María', 'Santos', 'Piloto', '555-1263', 'maria.santos@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Lopez', 'Azafata', '555-1264', 'antonio.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Verónica', 'Ramírez', 'Ingeniero de Aviación', '555-1265', 'veronica.ramirez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Hernández', 'Piloto', '555-1266', 'carlos.hernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Laura', 'Martínez', 'Azafata', '555-1267', 'laura.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('David', 'García', 'Piloto', '555-1268', 'david.garcia@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Felipe', 'Sánchez', 'Coordinador de Aeropuerto', '555-1269', 'felipe.sanchez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carmen', 'Pérez', 'Azafata', '555-1270', 'carmen.perez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Morales', 'Piloto', '555-1271', 'ricardo.morales@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ana', 'González', 'Azafata', '555-1272', 'ana.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Ramírez', 'Piloto', '555-1273', 'jose.ramirez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Laura', 'Salazar', 'Azafata', '555-1274', 'laura.salazar@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Esteban', 'García', 'Mecánico de Aviación', '555-1275', 'esteban.garcia@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('María', 'Blanco', 'Técnico de Aviones', '555-1276', 'maria.blanco@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Soto', 'Azafata', '555-1277', 'carlos.soto@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Lopez', 'Piloto', '555-1278', 'jose.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Claudia', 'Jiménez', 'Azafata', '555-1279', 'claudia.jimenez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Pérez', 'Ingeniero de Aviación', '555-1280', 'ricardo.perez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Marta', 'Hernández', 'Azafata', '555-1281', 'marta.hernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Rodríguez', 'Piloto', '555-1282', 'carlos.rodriguez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Beatriz', 'Alvarez', 'Azafata', '555-1283', 'beatriz.alvarez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Pedro', 'Sánchez', 'Coordinador de Vuelo', '555-1284', 'pedro.sanchez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Juan', 'González', 'Piloto', '555-1285', 'juan.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lorena', 'Martínez', 'Azafata', '555-1286', 'lorena.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sergio', 'Hernández', 'Piloto', '555-1287', 'sergio.hernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Patricia', 'López', 'Azafata', '555-1288', 'patricia.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Alberto', 'Jiménez', 'Jefe de Mantenimiento', '555-1289', 'alberto.jimenez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Francisco', 'Pérez', 'Piloto', '555-1290', 'francisco.perez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'García', 'Azafata', '555-1291', 'isabel.garcia@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Juan', 'Santos', 'Piloto', '555-1292', 'juan.santos@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raquel', 'Fernández', 'Azafata', '555-1293', 'raquel.fernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('David', 'Lopez', 'Piloto', '555-1294', 'david.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Laura', 'González', 'Azafata', '555-1295', 'laura.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Ramírez', 'Piloto', '555-1296', 'antonio.ramirez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Victoria', 'Pérez', 'Azafata', '555-1297', 'victoria.perez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Fernando', 'Vázquez', 'Piloto', '555-1298', 'fernando.vazquez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('María', 'Serrano', 'Azafata', '555-1299', 'maria.serrano@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Silva', 'Piloto', '555-1300', 'carlos.silva@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raquel', 'Lopez', 'Azafata', '555-1301', 'raquel.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Felipe', 'Martínez', 'Piloto', '555-1302', 'felipe.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Eva', 'González', 'Azafata', '555-1303', 'eva.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Daniel', 'Hernández', 'Piloto', '555-1304', 'daniel.hernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Cristina', 'Ramírez', 'Azafata', '555-1305', 'cristina.ramirez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Martínez', 'Piloto', '555-1306', 'jose.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'Pérez', 'Azafata', '555-1307', 'luis.perez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Serrano', 'Piloto', '555-1308', 'antonio.serrano@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Juan', 'Vázquez', 'Azafata', '555-1309', 'juan.vazquez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('María', 'Sánchez', 'Piloto', '555-1310', 'maria.sanchez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Adrián', 'Alvarez', 'Azafata', '555-1311', 'adrian.alvarez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ana', 'Lopez', 'Piloto', '555-1312', 'ana.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Rosa', 'García', 'Azafata', '555-1313', 'rosa.garcia@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Vicente', 'Fernández', 'Piloto', '555-1314', 'vicente.fernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Mendoza', 'Piloto', '555-1315', 'carlos.mendoza@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Gabriela', 'Cordero', 'Azafata', '555-1316', 'gabriela.cordero@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'Torres', 'Piloto', '555-1317', 'luis.torres@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sandra', 'Hernández', 'Azafata', '555-1318', 'sandra.hernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raúl', 'Sánchez', 'Piloto', '555-1319', 'raul.sanchez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Paola', 'González', 'Azafata', '555-1320', 'paola.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Esteban', 'López', 'Piloto', '555-1321', 'esteban.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('María', 'Salazar', 'Azafata', '555-1322', 'maria.salazar@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Rodríguez', 'Piloto', '555-1323', 'carlos.rodriguez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Silvia', 'Jiménez', 'Azafata', '555-1324', 'silvia.jimenez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Javier', 'Fernández', 'Piloto', '555-1325', 'javier.fernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Pablo', 'Morales', 'Azafata', '555-1326', 'pablo.morales@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Patricia', 'Serrano', 'Piloto', '555-1327', 'patricia.serrano@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Rafael', 'García', 'Azafata', '555-1328', 'rafael.garcia@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'Martínez', 'Piloto', '555-1329', 'isabel.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Cordero', 'Azafata', '555-1330', 'jose.cordero@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Eduardo', 'Alvarado', 'Piloto', '555-1331', 'eduardo.alvarado@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lidia', 'Pérez', 'Azafata', '555-1332', 'lidia.perez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Manuel', 'Vázquez', 'Piloto', '555-1333', 'manuel.vazquez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Marta', 'Ramírez', 'Azafata', '555-1334', 'marta.ramirez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Julio', 'Hernández', 'Piloto', '555-1335', 'julio.hernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carmen', 'Jiménez', 'Azafata', '555-1336', 'carmen.jimenez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Andrés', 'Morales', 'Piloto', '555-1337', 'andres.morales@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sonia', 'Silva', 'Azafata', '555-1338', 'sonia.silva@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Pedro', 'González', 'Piloto', '555-1339', 'pedro.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lucía', 'Lozano', 'Azafata', '555-1340', 'lucia.lozano@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Joaquín', 'Pérez', 'Piloto', '555-1341', 'joaquin.perez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raúl', 'García', 'Azafata', '555-1342', 'raul.garcia@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Patricia', 'Jiménez', 'Piloto', '555-1343', 'patricia.jimenez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Rodríguez', 'Azafata', '555-1344', 'ricardo.rodriguez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Iván', 'Torres', 'Piloto', '555-1345', 'ivan.torres@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Alma', 'Fernández', 'Azafata', '555-1346', 'alma.fernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Ramírez', 'Piloto', '555-1347', 'jose.ramirez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Monica', 'Sánchez', 'Azafata', '555-1348', 'monica.sanchez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Silva', 'Piloto', '555-1349', 'antonio.silva@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'Lopez', 'Azafata', '555-1350', 'luis.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'Martínez', 'Piloto', '555-1351', 'isabel.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('David', 'López', 'Piloto', '555-1352', 'david.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ana', 'Córdoba', 'Azafata', '555-1353', 'ana.cordoba@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Eduardo', 'Martínez', 'Piloto', '555-1354', 'eduardo.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raquel', 'Fernández', 'Azafata', '555-1355', 'raquel.fernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Joaquín', 'González', 'Piloto', '555-1356', 'joaquin.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lucía', 'Martínez', 'Azafata', '555-1357', 'lucia.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'Sánchez', 'Piloto', '555-1358', 'carlos.sanchez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Mónica', 'Ramírez', 'Azafata', '555-1359', 'monica.ramirez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Gómez', 'Piloto', '555-1360', 'jose.gomez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Verónica', 'Hernández', 'Azafata', '555-1361', 'veronica.hernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Andrés', 'Pérez', 'Piloto', '555-1362', 'andres.perez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Berta', 'López', 'Azafata', '555-1363', 'berta.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('José', 'Jiménez', 'Piloto', '555-1364', 'jose.jimenez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Margarita', 'García', 'Azafata', '555-1365', 'margarita.garcia@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ricardo', 'Sánchez', 'Piloto', '555-1366', 'ricardo.sanchez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Claudia', 'Alonso', 'Azafata', '555-1367', 'claudia.alonso@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Ramírez', 'Piloto', '555-1368', 'antonio.ramirez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Patricia', 'Gómez', 'Azafata', '555-1369', 'patricia.gomez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Juan', 'Cordero', 'Piloto', '555-1370', 'juan.cordero@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Teresa', 'Silva', 'Azafata', '555-1371', 'teresa.silva@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Fernando', 'Vázquez', 'Piloto', '555-1372', 'fernando.vazquez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Liliana', 'González', 'Azafata', '555-1373', 'liliana.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Alberto', 'Martínez', 'Piloto', '555-1374', 'alberto.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Inés', 'Pérez', 'Azafata', '555-1375', 'ines.perez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Fernando', 'López', 'Piloto', '555-1376', 'fernando.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Isabel', 'Jiménez', 'Azafata', '555-1377', 'isabel.jimenez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Martín', 'Hernández', 'Piloto', '555-1378', 'martin.hernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Verónica', 'Rodríguez', 'Azafata', '555-1379', 'veronica.rodriguez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('David', 'Vázquez', 'Piloto', '555-1380', 'david.vazquez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Sonia', 'López', 'Azafata', '555-1381', 'sonia.lopez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carlos', 'González', 'Piloto', '555-1382', 'carlos.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Lina', 'Hernández', 'Azafata', '555-1383', 'lina.hernandez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Javier', 'Morales', 'Piloto', '555-1384', 'javier.morales@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Raquel', 'Alvarado', 'Azafata', '555-1385', 'raquel.alvarado@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Ramón', 'Salazar', 'Piloto', '555-1386', 'ramon.salazar@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Pilar', 'García', 'Azafata', '555-1387', 'pilar.garcia@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Martínez', 'Piloto', '555-1388', 'antonio.martinez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Carmen', 'Rodríguez', 'Azafata', '555-1389', 'carmen.rodriguez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Luis', 'González', 'Piloto', '555-1390', 'luis.gonzalez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Eva', 'Silva', 'Azafata', '555-1391', 'eva.silva@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Antonio', 'Gómez', 'Piloto', '555-1392', 'antonio.gomez@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Berta', 'Alvarado', 'Azafata', '555-1393', 'berta.alvarado@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Adrián', 'Torres', 'Piloto', '555-1394', 'adrian.torres@aerolinea.com');
-INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Natalia', 'Morales', 'Azafata', '555-1395', 'natalia.morales@aerolinea.com');
+--------------------------------------------------------------------------------------------------------------------------------------
+//////// Creación de Triggers y Secuencias ////////
+--------------------------------------------------------------------------------------------------------------------------------------
 
--- Operaciones CRUD de EMPLEADOS
-
-SELECT * FROM TBL_Empleados;
-
-SELECT * FROM TBL_Empleados
-WHERE Cargo = 'Piloto';
-
-UPDATE TBL_Empleados
-SET Telefono = '555-9999'
-WHERE Nombre = 'Carlos' AND Apellido = 'Ramirez';
-
-DELETE FROM TBL_Empleados
-WHERE Nombre = 'Ana' AND Apellido = 'Gomez';
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
--- Trigger para hacer del ID Autoincremental (EMPLEADOS)
--- seq_empleado_id declarado para el trigger
+--Triggers para hacer del ID Autoincremental (empleados)
+--seq_empleado_id declarado para el trigger
 CREATE SEQUENCE seq_empleado_id START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 CREATE OR REPLACE TRIGGER trg_auto_increment_empleados
 BEFORE INSERT ON TBL_Empleados
@@ -2634,8 +2594,8 @@ BEGIN
 END;
 /
 
--- Trigger para hacer del ID Autoincremental (HOTELES)
--- seq_hotel_id declarado para el trigger
+--Triggers para hacer del ID Autoincremental (hotel)
+--seq_hotel_id declarado para el trigger
 CREATE SEQUENCE seq_hotel_id START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 CREATE OR REPLACE TRIGGER trg_auto_increment_hotel
 BEFORE INSERT ON TBL_Hoteles
@@ -2645,8 +2605,8 @@ BEGIN
 END;
 /
 
--- Trigger para hacer del ID Autoincremental (VUELOS)
--- seq_hotel_id declarado para el trigger
+--Triggers para hacer del ID Autoincremental (vuelos)
+--seq_hotel_id declarado para el trigger
 CREATE SEQUENCE seq_vuelos_id START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 CREATE OR REPLACE TRIGGER trg_auto_increment_vuelos
 BEFORE INSERT ON TBL_Vuelos
@@ -2656,8 +2616,8 @@ BEGIN
 END;
 /
 
--- Trigger para hacer del ID Autoincremental (TOURS)
--- seq_hotel_id declarado para el trigger
+--Triggers para hacer del ID Autoincremental (tours)
+--seq_hotel_id declarado para el trigger
 CREATE SEQUENCE seq_tours_id START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 CREATE OR REPLACE TRIGGER trg_auto_increment_tours
 BEFORE INSERT ON TBL_Tours
@@ -2667,8 +2627,8 @@ BEGIN
 END;
 /
 
--- Trigger para hacer del ID Autoincremental (RESERVAS)
--- seq_reservas_id declarado para el trigger
+--Triggers para hacer del ID Autoincremental (Reservas)
+--seq_reservas_id declarado para el trigger
 CREATE SEQUENCE seq_reservas_id START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 CREATE OR REPLACE TRIGGER trg_auto_increment_reservas
 BEFORE INSERT ON TBL_Reservas
@@ -2678,8 +2638,8 @@ BEGIN
 END;
 /
 
--- Triggers para hacer del ID Autoincremental (PAGOS)
--- seq_pagos_id declarado para el trigger
+--Triggers para hacer del ID Autoincremental (pagos)
+--seq_pagos_id declarado para el trigger
 CREATE SEQUENCE seq_pagos_id START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 CREATE OR REPLACE TRIGGER trg_auto_increment_pagos
 BEFORE INSERT ON TBL_Pagos
@@ -2689,8 +2649,8 @@ BEGIN
 END;
 /
 
--- Trigger para hacer del ID Autoincremental (RESERVAS_TOURS)
--- seq_reservaTour_id declarado para el trigger
+--Triggers para hacer del ID Autoincremental (Reserva Tours)
+--seq_reservaTour_id declarado para el trigger
 CREATE SEQUENCE seq_reservaTour_id START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 CREATE OR REPLACE TRIGGER trg_auto_increment_reservaTour
 BEFORE INSERT ON TBL_Reservas_Tours
