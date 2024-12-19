@@ -2658,3 +2658,75 @@ BEGIN
     :NEW.ID_Reserva_Tour := seq_reservaTour_id.NEXTVAL;
 END;
 /
+
+--------------------------------------------------------------------------------------------------------------------------------------
+//////// Creación de Dimensiones ////////
+--------------------------------------------------------------------------------------------------------------------------------------
+
+--Dimensión de la Tabla de Clientes
+CREATE TABLE Dim_Clientes AS
+SELECT 
+    ID_Cliente,
+    Nombre,
+    Apellido,
+    Email,
+    Telefono,
+    Direccion
+FROM 
+    TBL_Clientes;
+
+--Dimensión de la Tabla de Vuelos
+CREATE TABLE Dim_Vuelos AS
+SELECT 
+    ID_Vuelo,
+    Aerolinea,
+    Origen,
+    Destino,
+    Fecha_Salida,
+    Fecha_Llegada,
+    Precio
+FROM 
+    TBL_Vuelos;
+    
+--Dimensión de la Tabla de Tours
+CREATE TABLE Dim_Tours AS
+SELECT 
+    ID_Tour,
+    Nombre,
+    Descripcion,
+    Duracion,
+    Precio
+FROM 
+    TBL_Tours;
+
+--Dimensión de la Tabla de Hoteles
+CREATE TABLE Dim_Hoteles AS
+SELECT 
+    ID_Hotel,
+    Nombre,
+    Ubicacion,
+    Categoria,
+    Precio_Noche
+FROM 
+    TBL_Hoteles;
+
+--Dimensión de las Tablas de Reservas y Pagos
+CREATE TABLE TBL_Reservas_Pagos AS
+SELECT 
+    R.ID_Reserva,
+    P.ID_Pago,
+    P.Monto,
+    P.Fecha_Pago,
+    P.Metodo_Pago,
+    R.ID_Cliente,
+    R.ID_Vuelo,
+    R.ID_Hotel,
+    RT.ID_Tour
+FROM 
+    TBL_Reservas R
+JOIN 
+    TBL_Pagos P ON R.ID_Reserva = P.ID_Reserva
+LEFT JOIN 
+    TBL_Reservas_Tours RT ON R.ID_Reserva = RT.ID_Reserva;
+
+SELECT * FROM TBL_Reservas_Pagos;
