@@ -2,11 +2,11 @@
 ////////Creación de Usuario////////
 --------------------------------------------------------------------------------------------------------------------------------------
 
--- Crear un usuario
+--Crear un usuario
 CREATE USER Admin01 IDENTIFIED BY Admin01;
 GRANT CONNECT,RESOURCE,DBA TO Admin01;
 
--- Otorgar privilegios 
+--Otorgar privilegios 
 GRANT CREATE SESSION TO Admin01;
 GRANT CREATE TABLE TO Admin01;
 GRANT CREATE ANY TABLE TO Admin01;
@@ -25,20 +25,20 @@ GRANT ALTER ANY PROCEDURE TO Admin01;
 //////// Creación de TableSpace ////////
 --------------------------------------------------------------------------------------------------------------------------------------
 
--- Creación de tablespace
+--Creación de tablespace
 CREATE TABLESPACE TableSpaceProyecto
 DATAFILE 'C:\Oracle\proyecto\TableSpaceProyecto.dbf' 
 SIZE 100M
 AUTOEXTEND ON NEXT 10M MAXSIZE UNLIMITED;
   
--- Aignar tablespace por defecto
+--Aignar tablespace por defecto
 ALTER USER Admin01 DEFAULT TABLESPACE TableSpaceProyecto;
 
 --------------------------------------------------------------------------------------------------------------------------------------
 //////// Creación de Tablas ////////
 --------------------------------------------------------------------------------------------------------------------------------------
 
--- Tabla: Clientes
+--Tabla: Clientes
 CREATE TABLE TBL_Clientes (
     ID_Cliente INT PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE TBL_Clientes (
     Direccion VARCHAR(100)
 );
 
--- Tabla: Empleados
+--Tabla: Empleados
 CREATE TABLE TBL_Empleados (
     ID_Empleado INT PRIMARY KEY ,
     Nombre VARCHAR(50) NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE TBL_Empleados (
     Email VARCHAR(100)
 );
 
--- Tabla: Hoteles
+--Tabla: Hoteles
 CREATE TABLE TBL_Hoteles (
     ID_Hotel INT PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE TBL_Hoteles (
     Precio_Noche DECIMAL(10,2)
 );
 
--- Tabla: Vuelos
+--Tabla: Vuelos
 CREATE TABLE TBL_Vuelos (
     ID_Vuelo INT PRIMARY KEY,
     Aerolinea VARCHAR(50),
@@ -78,7 +78,7 @@ CREATE TABLE TBL_Vuelos (
     Precio DECIMAL(10,2)
 );
 
--- Tabla: Tours
+--Tabla: Tours
 CREATE TABLE TBL_Tours (
     ID_Tour INT PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE TBL_Tours (
     Precio DECIMAL(10,2)
 );
 
--- Tabla: Reservas
+--Tabla: Reservas
 CREATE TABLE TBL_Reservas (
     ID_Reserva INT PRIMARY KEY,
     ID_Cliente INT,
@@ -98,7 +98,7 @@ CREATE TABLE TBL_Reservas (
     FOREIGN KEY (ID_Hotel) REFERENCES TBL_Hoteles(ID_Hotel)
 );
 
--- Tabla: Pagos
+--Tabla: Pagos
 CREATE TABLE TBL_Pagos (
     ID_Pago INT PRIMARY KEY,
     Monto DECIMAL(10,2) NOT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE TBL_Pagos (
     FOREIGN KEY (ID_Reserva) REFERENCES TBL_Reservas(ID_Reserva)
 );
 
--- Tabla: Reservas_Tours
+--Tabla: Reservas_Tours
 CREATE TABLE TBL_Reservas_Tours (
     ID_Reserva_Tour INT PRIMARY KEY ,
     ID_Reserva INT,
@@ -121,7 +121,7 @@ CREATE TABLE TBL_Reservas_Tours (
 //////// Inserts de las Tablas ////////
 --------------------------------------------------------------------------------------------------------------------------------------
 
--- Inserts de la tabla: Clientes
+--Inserts de la tabla: Clientes
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) 
 VALUES (1, 'Juan', 'Pérez', 'juan.perez@example.com', '123456789', 'Calle 1, Ciudad A');
 INSERT INTO TBL_Clientes (ID_Cliente, Nombre, Apellido, Email, Telefono, Direccion) 
@@ -343,7 +343,7 @@ INSERT INTO TBL_Clientes VALUES (198, 'Carla', 'Salazar', 'carla.salazar@example
 INSERT INTO TBL_Clientes VALUES (199, 'Gerardo', 'Ruiz', 'gerardo.ruiz@example.com', '999000111', 'Calle 199, Ciudad MMMM');
 INSERT INTO TBL_Clientes VALUES (200, 'Veronica', 'Jimenez', 'veronica.jimenez@example.com', '000111222', 'Calle 200, Ciudad NNNN');
 
--- Operaciones CRUD para la tabla: Clientes
+--Operaciones CRUD para la tabla: Clientes
 SELECT * FROM TBL_Clientes;
 
 UPDATE TBL_Clientes
@@ -549,7 +549,7 @@ INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Be
 INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Adrián', 'Torres', 'Piloto', '555-1394', 'adrian.torres@aerolinea.com');
 INSERT INTO TBL_Empleados (Nombre, Apellido, Cargo, Telefono, Email) VALUES ('Natalia', 'Morales', 'Azafata', '555-1395', 'natalia.morales@aerolinea.com');
 
--- Operaciones CRUD para la tabla Empleados
+--Operaciones CRUD para la tabla Empleados
 SELECT * FROM TBL_Empleados;
 
 SELECT * FROM TBL_Empleados
@@ -562,7 +562,7 @@ WHERE Nombre = 'Carlos' AND Apellido = 'Ramirez';
 DELETE FROM TBL_Empleados
 WHERE Nombre = 'Ana' AND Apellido = 'Gomez';
 
--- Inserts de la tabla: Hoteles
+--Inserts de la tabla: Hoteles
 INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Mar Azul', 'Playa del Carmen, México', '5 Estrellas', 200.00);
 INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Hotel Paraíso', 'Cancún, México', '4 Estrellas', 150.00);
 INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Grand Resort', 'Bavaro, República Dominicana', '5 Estrellas', 300.00);
@@ -751,7 +751,7 @@ INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Tr
 INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Ocean Breeze Resort', 'Tulum, México', '3 Estrellas', 200.00);
 INSERT INTO TBL_Hoteles (Nombre, Ubicacion, Categoria, Precio_Noche) VALUES ('Caribbean Ocean Resort', 'Puerto Vallarta, México', '5 Estrellas', 480.00);
 
--- Operaciones CRUD para la tabla Hoteles 
+--Operaciones CRUD para la tabla Hoteles 
 SELECT * FROM TBL_Hoteles;
 
 SELECT * FROM TBL_Hoteles
@@ -767,7 +767,7 @@ WHERE Nombre = 'Hotel Mar Azul';
 DELETE FROM TBL_Hoteles
 WHERE Nombre = 'Hotel Sol y Mar';
 
--- Inserts de la Tabla: Vuelos
+--Inserts de la Tabla: Vuelos
 INSERT INTO TBL_Vuelos (Aerolinea, Origen, Destino, Fecha_Salida, Fecha_Llegada, Precio) 
 VALUES ('Delta Airlines', 'New York', 'Los Angeles', TO_DATE('2024-12-20', 'YYYY-MM-DD'), TO_DATE('2024-12-20', 'YYYY-MM-DD'), 350.50);
 
@@ -966,7 +966,6 @@ VALUES ('Qantas', 'Melbourne', 'Brisbane', TO_DATE('2025-02-22', 'YYYY-MM-DD'), 
 
 INSERT INTO TBL_Vuelos (Aerolinea, Origen, Destino, Fecha_Salida, Fecha_Llegada, Precio)
 VALUES ('Emirates', 'Dubái', 'Ciudad del Cabo', TO_DATE('2025-02-23', 'YYYY-MM-DD'), TO_DATE('2025-02-23', 'YYYY-MM-DD'), 780.00);
-
 
 INSERT INTO TBL_Vuelos (Aerolinea, Origen, Destino, Fecha_Salida, Fecha_Llegada, Precio)
 VALUES ('American Airlines', 'Dallas', 'San Francisco', TO_DATE('2025-02-24', 'YYYY-MM-DD'), TO_DATE('2025-02-24', 'YYYY-MM-DD'), 390.00);
@@ -1296,7 +1295,7 @@ VALUES ('Iberia', 'Lisboa', 'Valencia', TO_DATE('2025-04-21', 'YYYY-MM-DD'), TO_
 INSERT INTO TBL_Vuelos (Aerolinea, Origen, Destino, Fecha_Salida, Fecha_Llegada, Precio)
 VALUES ('Air Europa', 'Barcelona', 'Palma de Mallorca', TO_DATE('2025-04-22', 'YYYY-MM-DD'), TO_DATE('2025-04-22', 'YYYY-MM-DD'), 140.00);
 
--- Operaciones CRUD para la tabla Vuelos
+--Operaciones CRUD para la tabla Vuelos
 SELECT * FROM TBL_Vuelos;
 
 SELECT * FROM TBL_Vuelos
@@ -1313,7 +1312,7 @@ DELETE FROM TBL_Vuelos
 WHERE Precio < 150;
 
 
--- Inserts de la tabla: Tours
+--Inserts de la tabla: Tours
 INSERT INTO TBL_Tours (Nombre, Descripcion, Duracion, Precio) 
 VALUES ('Tour por las Pirámides de Egipto', 'Explora las pirámides de Giza, la Esfinge y el Museo Egipcio con un guía experto.', 8, 150.00);
 
@@ -1887,7 +1886,7 @@ VALUES ('Exploración de las selvas de Borneo', 'Descubre orangutanes y biodivers
 INSERT INTO TBL_Tours (Nombre, Descripcion, Duracion, Precio) 
 VALUES ('Ruta por los campos de lavanda en Provenza', 'Disfruta de paisajes morados y fragantes en Francia.', 3, 150.00);
 
--- Operaciones CRUD para la tabla: Tours
+--Operaciones CRUD para la tabla: Tours
 SELECT * FROM TBL_Tours;
 
 SELECT * FROM TBL_Tours
@@ -2121,7 +2120,7 @@ INSERT INTO TBL_Reservas (ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (198, 3, 22);
 INSERT INTO TBL_Reservas (ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (199, 4, 23);
 INSERT INTO TBL_Reservas (ID_Cliente, ID_Vuelo, ID_Hotel) VALUES (200, 5, 24);
 
--- Inserts de la tabla: Pagos
+--Inserts de la tabla: Pagos
 INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (150.00, TO_DATE('2024-01-05', 'YYYY-MM-DD'), 'Tarjeta de Crédito', 1);
 INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (200.00, TO_DATE('2024-01-06', 'YYYY-MM-DD'), 'PayPal', 2);
 INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (300.00, TO_DATE('2024-01-07', 'YYYY-MM-DD'), 'Tarjeta de Débito', 3);
@@ -2342,7 +2341,7 @@ INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (280.0
 INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (220.00, TO_DATE('2024-07-22', 'YYYY-MM-DD'), 'Tarjeta de Débito', 199);
 INSERT INTO TBL_Pagos (Monto, Fecha_Pago, Metodo_Pago, ID_Reserva) VALUES (370.00, TO_DATE('2024-07-23', 'YYYY-MM-DD'), 'Efectivo', 200);
 
--- Operaciones CRUD para la tabla Pagos
+--Operaciones CRUD para la tabla Pagos
 SELECT * FROM TBL_Pagos
 WHERE Metodo_Pago = 'Tarjeta de Crédito';
 
@@ -2358,7 +2357,7 @@ DELETE FROM TBL_Pagos
 WHERE Fecha_Pago < '2024-01-09';
 
 
--- Inserts de la tabla: Reservas_Tours
+--Inserts de la tabla: Reservas_Tours
 INSERT INTO TBL_Reservas_Tours (ID_Reserva, ID_Tour) VALUES (1, 5);
 INSERT INTO TBL_Reservas_Tours (ID_Reserva, ID_Tour) VALUES (2, 8);
 INSERT INTO TBL_Reservas_Tours (ID_Reserva, ID_Tour) VALUES (3, 12);
